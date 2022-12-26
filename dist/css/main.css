@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+body {
+  font-family: "Poppins";
+}
+
+.navigation {
+  height: 70px;
+  background: #fff;
+  border: 2px solid black;
+}
+
+.nav-container {
+  max-height: 1000px;
+  margin: 0 auto;
+  border: 2px dashed black;
+}
+
+.brand {
+  position: absolute;
+  padding-left: 20px;
+  padding-top: 10px;
+  float: left;
+  line-height: 70px;
+}
+.brand a {
+  text-decoration: none;
+}
+
+nav {
+  border: 1px solid red;
+  float: right;
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+nav ul li {
+  float: left;
+  position: relative;
+}
+nav ul li a {
+  display: block;
+  padding: 10px 20px 0px 20px;
+  line-height: 50px;
+  background: #fff;
+  color: #0c0c0c;
+  text-decoration: none;
+}
+nav ul li a::before {
+  transition: 400ms;
+  height: 5px;
+  content: "";
+  position: absolute;
+  background-color: #f8b500;
+  width: 0%;
+  bottom: 0px;
+}
+nav ul li a:hover::before {
+  width: 60%;
+}
+nav ul li a .fa-user {
+  font-size: 20px;
+}
+
+.nav-mobile {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #fff;
+  height: 70px;
+  width: 70px;
+}
+
+@media only screen and (max-width: 799px) {
+  .nav-mobile {
+    display: block;
+  }
+  nav {
+    width: 100%;
+    padding: 70px 0 15px;
+  }
+  nav ul {
+    display: none;
+  }
+  nav ul li {
+    float: none;
+  }
+  nav ul li a {
+    padding: 15px;
+    line-height: 20px;
+    padding-left: 30px;
+  }
+  nav ul li a:hover::before {
+    width: 10%;
+  }
+}
+#nav-toggle {
+  position: absolute;
+  margin-top: 12px;
+  left: 18px;
+  top: 22px;
+  cursor: pointer;
+  padding: 10px 35px 16px 0px;
+}
+#nav-toggle span,
+#nav-toggle span::before,
+#nav-toggle span::after {
+  cursor: pointer;
+  border-radius: 1px;
+  height: 5px;
+  width: 30px;
+  background: #f8b500;
+  position: absolute;
+  display: block;
+  content: "";
+  transition: all 300ms ease-in-out;
+}
+#nav-toggle span::before {
+  top: -10px;
+}
+#nav-toggle span::after {
+  bottom: -10px;
+}
+#nav-toggle.active span {
+  background-color: transparent;
+}
+#nav-toggle.active span::before, #nav-toggle.active span::after {
+  top: 0;
+}
+#nav-toggle.active span::before {
+  transform: rotate(45deg);
+}
+#nav-toggle.active span::after {
+  transform: rotate(-45deg);
+}
+
+@media screen and (min-width: 799px) {
+  .nav-list {
+    display: block !important;
+  }
+}/*# sourceMappingURL=main.css.map */

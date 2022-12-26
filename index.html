@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="dist/css/main.css">
+    <title>Quiz</title>
+</head>
+<body>
+    <!-- navigation bar -->
+ <section class="navigation">
+  <div class="nav-container">
+    <div class="brand">
+      <!-- logo -->
+      <a href="#"><svg class="enter-code-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28px" height="28px" viewBox="0 0 56 56" version="1.1" data-v-530abfb2=""><g data-v-530abfb2=""><path d="M 7.820312 7.710938 L 7.820312 7.707031 C 7.800781 7.726562 7.785156 7.746094 7.765625 7.765625 C 7.746094 7.785156 7.726562 7.800781 7.707031 7.816406 L 7.710938 7.820312 C -2.605469 18.257812 -2.570312 35.082031 7.820312 45.472656 C 15.769531 53.421875 27.480469 55.308594 37.21875 51.136719 C 37.824219 50.878906 38.34375 50.515625 38.777344 50.085938 C 40.632812 48.230469 40.78125 45.074219 38.765625 43.058594 C 37.320312 41.613281 35.136719 41.140625 33.257812 41.941406 C 27.175781 44.535156 19.863281 43.355469 14.898438 38.390625 C 8.398438 31.890625 8.386719 21.367188 14.84375 14.84375 C 21.367188 8.386719 31.890625 8.398438 38.390625 14.898438 C 43.355469 19.863281 44.535156 27.175781 41.941406 33.257812 C 41.140625 35.136719 41.613281 37.320312 43.058594 38.765625 C 45.074219 40.78125 48.230469 40.632812 50.085938 38.777344 C 50.515625 38.34375 50.878906 37.824219 51.136719 37.21875 C 55.308594 27.480469 53.421875 15.769531 45.472656 7.816406 C 35.082031 -2.570312 18.257812 -2.605469 7.820312 7.710938 " data-v-530abfb2="" style="fill: rgb(70, 26, 66);"></path><path d="M 54.089844 54.089844 C 51.714844 56.460938 47.863281 56.460938 45.488281 54.089844 C 43.113281 51.714844 43.113281 47.863281 45.488281 45.488281 C 47.863281 43.113281 51.714844 43.113281 54.089844 45.488281 C 56.460938 47.863281 56.460938 51.714844 54.089844 54.089844 " data-v-530abfb2="" style="fill: rgb(70, 26, 66);"></path></g></svg></a>
+    </div>
+    <nav>
+  <div class="nav-mobile">
+    <a id="nav-toggle"  href="#!"><span></span></a>
+  </div>
+  <ul class="nav-list">
+    <li><a href="#!">Home</a></li>
+    <li><a href="#!">Quiz</a></li>
+    <!-- <li>
+      <a href="#!">Services</a>
+      <ul class="nav-dropdown">
+        <li><a href="#!">Web Design</a></li>
+        <li><a href="#!">Web Development</a></li>
+        <li><a href="#!">Graphic Design</a></li>
+      </ul>
+    </li> -->
+    <!-- <li><a href="#!">About Us</a></li> -->
+    <li><a href="#!">Contact</a></li>
+    <li><a href="#" class="user-icon"><i class="fa fa-user"></i></a></li>
+  </ul>
+</nav>
+    </div>
+</section>
+    <!-- fin navigation bar -->
+</body>
+<script>
+     $('#nav-toggle').click(function() {
+      $('nav ul').slideToggle();
+     
+    });
+    $('#nav-toggle').on('click', function() {
+      this.classList.toggle('active')
+    
+    });
+  
+</script>
+</html>

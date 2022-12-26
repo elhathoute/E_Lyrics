@@ -1,0 +1,147 @@
+@import  'variables','config';
+
+.navigation{
+    height: $nav-height;
+    background: $nav-background;
+    border: 2px solid black;//just pour regarder l'element
+}
+.nav-container{
+    max-height: $content-width;//The max-height CSS property sets the maximum height of an element. It prevents the used value of the height property from becoming larger than the value specified for max-height.
+    margin: 0 auto; //0 into the top and bottom and auto left and right
+    border: 2px dashed black;//just pour regarder l'element
+}
+.brand{//logo
+position: absolute; //With absolute positioning, an element can be placed anywhere on a page
+padding-left: 20px;
+padding-top: 10px;
+float: left;//specifies whether an element should float to the left, right
+line-height: $nav-height; //specifies the height of a line.
+
+  
+    a{
+        text-decoration: none;
+    }
+}
+nav{
+    border: 1px solid red;//just pour visualiser l'element
+    float: right;
+    ul{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    
+    li{
+        float: left;
+        position: relative;
+        a{
+            display: block;
+            padding: 10px 20px 0px 20px;
+            line-height: $href-height;
+            background: $nav-background;
+            color: $nav-font-color;
+            text-decoration: none;
+            &::before{//selector inserts something before the content of each selected element
+                transition: 400ms;
+                height: 5px;
+                content: "";
+                position: absolute;//Un élément avec position: absolu, est positionné par rapport à l’ancêtre positionné le plus proche
+                background-color: $link-hover-color;
+                width: 0%;
+                bottom: 0px;
+            }
+          
+            &:hover::before{
+                width: 60%;
+            }
+          
+           .fa-user{//fa user
+                        font-size: 20px;
+                    }
+        }
+      
+        
+    }
+}
+}//fin nav
+// mobile nav
+.nav-mobile{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: $nav-background;
+    height: $nav-height;
+    width: $nav-height;
+}
+@media only screen and (max-width:$breakpoint){
+    .nav-mobile{
+        display: block;
+    }
+    nav{
+        width: 100%;
+        padding: $nav-height 0 15px;
+        ul{
+            display: none;
+            li{
+                float: none;
+                a{
+                    padding: 15px;
+                    line-height: 20px;
+                    padding-left: 30px;
+                    &:hover::before{
+                        width: 10%;
+                    }
+                }
+              
+            }
+        }
+
+    }
+
+    
+}
+#nav-toggle{
+    position: absolute;
+    margin-top: 12px;
+    left: 18px;
+    top: 22px;
+    cursor: pointer;
+    padding: 10px 35px 16px 0px;
+    span,
+    span::before
+    ,span::after{
+        cursor: pointer;
+        border-radius: 1px;
+        height: 5px;
+        width: 30px;
+        background: $link-hover-color;
+        position: absolute;
+        display: block;
+        content: "";
+        transition: all 300ms ease-in-out;
+    }
+    span::before{
+        top: -10px;
+    }
+    span::after{
+        bottom: -10px;
+    }
+    &.active span{
+        background-color: transparent;
+        &::before,
+        &::after{
+            top: 0;
+        }
+        &::before{
+            transform: rotate(45deg);
+        }
+        &::after{
+            transform: rotate(-45deg);
+        }
+    }
+}
+@media screen and (min-width: $breakpoint) {
+    .nav-list {
+      display: block !important;
+    }
+  }
