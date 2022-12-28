@@ -4,15 +4,14 @@ body {
 }
 
 .navigation {
+  border-radius: 12px;
   height: 70px;
   background: #fff;
-  border: 2px solid black;
 }
 
 .nav-container {
   max-height: 1000px;
   margin: 0 auto;
-  border: 2px dashed black;
 }
 
 .brand {
@@ -25,9 +24,11 @@ body {
 .brand a {
   text-decoration: none;
 }
+.brand a #svg-icon-brand {
+  border-radius: 10px;
+}
 
 nav {
-  border: 1px solid red;
   float: right;
 }
 nav ul {
@@ -39,7 +40,7 @@ nav ul li {
   float: left;
   position: relative;
 }
-nav ul li a {
+nav ul li .search, nav ul li a {
   display: block;
   padding: 10px 20px 0px 20px;
   line-height: 50px;
@@ -47,7 +48,7 @@ nav ul li a {
   color: #0c0c0c;
   text-decoration: none;
 }
-nav ul li a::before {
+nav ul li .search::before, nav ul li a::before {
   transition: 400ms;
   height: 5px;
   content: "";
@@ -56,11 +57,19 @@ nav ul li a::before {
   width: 0%;
   bottom: 0px;
 }
-nav ul li a:hover::before {
+nav ul li .search:hover::before, nav ul li a:hover::before {
   width: 60%;
 }
-nav ul li a .fa-user {
+nav ul li .search .fa-user, nav ul li a .fa-user {
   font-size: 20px;
+}
+nav ul li .input-search {
+  margin-right: 20px;
+  height: 30px;
+  border-radius: 100px;
+}
+nav ul li .input-search:focus {
+  width: 200px;
 }
 
 .nav-mobile {

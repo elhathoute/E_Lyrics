@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="dist/css/main.css">
+    
     <title>Quiz</title>
 </head>
 <body>
@@ -15,13 +16,25 @@
   <div class="nav-container">
     <div class="brand">
       <!-- logo -->
-      <a href="#"><svg class="enter-code-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28px" height="28px" viewBox="0 0 56 56" version="1.1" data-v-530abfb2=""><g data-v-530abfb2=""><path d="M 7.820312 7.710938 L 7.820312 7.707031 C 7.800781 7.726562 7.785156 7.746094 7.765625 7.765625 C 7.746094 7.785156 7.726562 7.800781 7.707031 7.816406 L 7.710938 7.820312 C -2.605469 18.257812 -2.570312 35.082031 7.820312 45.472656 C 15.769531 53.421875 27.480469 55.308594 37.21875 51.136719 C 37.824219 50.878906 38.34375 50.515625 38.777344 50.085938 C 40.632812 48.230469 40.78125 45.074219 38.765625 43.058594 C 37.320312 41.613281 35.136719 41.140625 33.257812 41.941406 C 27.175781 44.535156 19.863281 43.355469 14.898438 38.390625 C 8.398438 31.890625 8.386719 21.367188 14.84375 14.84375 C 21.367188 8.386719 31.890625 8.398438 38.390625 14.898438 C 43.355469 19.863281 44.535156 27.175781 41.941406 33.257812 C 41.140625 35.136719 41.613281 37.320312 43.058594 38.765625 C 45.074219 40.78125 48.230469 40.632812 50.085938 38.777344 C 50.515625 38.34375 50.878906 37.824219 51.136719 37.21875 C 55.308594 27.480469 53.421875 15.769531 45.472656 7.816406 C 35.082031 -2.570312 18.257812 -2.605469 7.820312 7.710938 " data-v-530abfb2="" style="fill: rgb(70, 26, 66);"></path><path d="M 54.089844 54.089844 C 51.714844 56.460938 47.863281 56.460938 45.488281 54.089844 C 43.113281 51.714844 43.113281 47.863281 45.488281 45.488281 C 47.863281 43.113281 51.714844 43.113281 54.089844 45.488281 C 56.460938 47.863281 56.460938 51.714844 54.089844 54.089844 " data-v-530abfb2="" style="fill: rgb(70, 26, 66);"></path></g></svg></a>
+      <a href="#"><svg id="svg-icon-brand" class="enter-code-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28px" height="28px" viewBox="0 0 56 56" version="1.1" data-v-530abfb2=""><g data-v-530abfb2=""><path d="M 7.820312 7.710938 L 7.820312 7.707031 C 7.800781 7.726562 7.785156 7.746094 7.765625 7.765625 C 7.746094 7.785156 7.726562 7.800781 7.707031 7.816406 L 7.710938 7.820312 C -2.605469 18.257812 -2.570312 35.082031 7.820312 45.472656 C 15.769531 53.421875 27.480469 55.308594 37.21875 51.136719 C 37.824219 50.878906 38.34375 50.515625 38.777344 50.085938 C 40.632812 48.230469 40.78125 45.074219 38.765625 43.058594 C 37.320312 41.613281 35.136719 41.140625 33.257812 41.941406 C 27.175781 44.535156 19.863281 43.355469 14.898438 38.390625 C 8.398438 31.890625 8.386719 21.367188 14.84375 14.84375 C 21.367188 8.386719 31.890625 8.398438 38.390625 14.898438 C 43.355469 19.863281 44.535156 27.175781 41.941406 33.257812 C 41.140625 35.136719 41.613281 37.320312 43.058594 38.765625 C 45.074219 40.78125 48.230469 40.632812 50.085938 38.777344 C 50.515625 38.34375 50.878906 37.824219 51.136719 37.21875 C 55.308594 27.480469 53.421875 15.769531 45.472656 7.816406 C 35.082031 -2.570312 18.257812 -2.605469 7.820312 7.710938 " data-v-530abfb2="" style="fill: rgb(22, 2, 19);"></path><path d="M 54.089844 54.089844 C 51.714844 56.460938 47.863281 56.460938 45.488281 54.089844 C 43.113281 51.714844 43.113281 47.863281 45.488281 45.488281 C 47.863281 43.113281 51.714844 43.113281 54.089844 45.488281 C 56.460938 47.863281 56.460938 51.714844 54.089844 54.089844 " data-v-530abfb2="" style="fill: rgb(70, 26, 66);"></path></g></svg></a>
     </div>
     <nav>
   <div class="nav-mobile">
     <a id="nav-toggle"  href="#!"><span></span></a>
   </div>
+
+
+ 
   <ul class="nav-list">
+    
+ <!-- search -->
+    <li>
+      <form class="search" action="#">
+     <input type="search" id="input-search" class="input-search" name="gsearch" placeholder="Entrer Quiz">
+    <label for="input-search"><span><i class="fa fa-search"></i></span></label>
+   </form>
+ 
+ </li>
     <li><a href="#!">Home</a></li>
     <li><a href="#!">Quiz</a></li>
     <!-- <li>
@@ -34,6 +47,8 @@
     </li> -->
     <!-- <li><a href="#!">About Us</a></li> -->
     <li><a href="#!">Contact</a></li>
+    <li><a href="#" id="toggle-icon-mode-white"><i class="fa fa-toggle-off" aria-hidden="true"></i></a></li>
+    <li><a href="#" id="toggle-icon-mode-black"><i class="fa fa-toggle-on" aria-hidden="true"></i></a></li>
     <li><a href="#" class="user-icon"><i class="fa fa-user"></i></a></li>
   </ul>
 </nav>
@@ -50,6 +65,42 @@
       this.classList.toggle('active')
     
     });
+
+  //navbar par defaut black
+    $(".navigation ").css('background-color','black');
+   $("ul>li>a").css('background-color','black');
+   $("ul>li>.search").css('background-color','black');
+   $("ul>li>a").css('color','white');
+    $("#svg-icon-brand").css('background-color','white');
+//display none of icon mode black
+$("#toggle-icon-mode-black").css('display','none');
+//click in  icon white mode
+$("#toggle-icon-mode-white").click(function(){
+   $("body").css("background-color","black");
+   $("#toggle-icon-mode-black").css('display', 'block');
+   $(this).css('display', 'none');
+
+//active white mode
+   $(".navigation ").css('background-color','white');
+   $("ul>li>a").css('background-color','white');
+   $("ul>li>.search").css('background-color','white');
+   $("ul>li>a").css('color','black');
+  $("#svg-icon-brand").css('background-color','white');
+
+});
+//click in icon dark mode
+   $("#toggle-icon-mode-black").click(function(){
+   $("body").css("background-color","white");
+   $("#toggle-icon-mode-white").css('display', 'block');
+   $(this).css('display', 'none');
+ //return a dark mode
+   $(".navigation ").css('background-color','black');
+   $("ul>li>a").css('background-color','black');
+   $("ul>li>.search").css('background-color','black');
+   $("ul>li>a").css('color','white');
+    $("#svg-icon-brand").css('background-color','white');
+});
+
   
 </script>
 </html>

@@ -1,14 +1,16 @@
 @import  'variables','config';
 
 .navigation{
+    border-radius: 12px;
     height: $nav-height;
     background: $nav-background;
-    border: 2px solid black;//just pour regarder l'element
+    // border: 2px solid black;//just pour regarder l'element
+
 }
 .nav-container{
     max-height: $content-width;//The max-height CSS property sets the maximum height of an element. It prevents the used value of the height property from becoming larger than the value specified for max-height.
     margin: 0 auto; //0 into the top and bottom and auto left and right
-    border: 2px dashed black;//just pour regarder l'element
+    // border: 2px dashed black;//just pour regarder l'element
 }
 .brand{//logo
 position: absolute; //With absolute positioning, an element can be placed anywhere on a page
@@ -20,10 +22,13 @@ line-height: $nav-height; //specifies the height of a line.
   
     a{
         text-decoration: none;
+        #svg-icon-brand{
+            border-radius:10px;
+        }
     }
 }
 nav{
-    border: 1px solid red;//just pour visualiser l'element
+    // border: 1px solid red;//just pour visualiser l'element
     float: right;
     ul{
         list-style: none;
@@ -33,7 +38,7 @@ nav{
     li{
         float: left;
         position: relative;
-        a{
+        .search,a{
             display: block;
             padding: 10px 20px 0px 20px;
             line-height: $href-height;
@@ -58,8 +63,19 @@ nav{
                         font-size: 20px;
                     }
         }
-      
+       
+            .input-search{
+                margin-right: 20px;
+                height: 30px;
+                border-radius:100px;
+            }
+            .input-search:focus{
+            width: 200px;
+            // background-color: beige;
+            }
+         
         
+    
     }
 }
 }//fin nav
