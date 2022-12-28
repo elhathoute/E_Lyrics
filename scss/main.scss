@@ -1,7 +1,8 @@
 @import  'variables','config';
 
 .navigation{
-    border-radius: 12px;
+    border-radius:12px;
+    // border-top-right-radius: ;
     height: $nav-height;
     background: $nav-background;
     // border: 2px solid black;//just pour regarder l'element
@@ -11,6 +12,12 @@
     max-height: $content-width;//The max-height CSS property sets the maximum height of an element. It prevents the used value of the height property from becoming larger than the value specified for max-height.
     margin: 0 auto; //0 into the top and bottom and auto left and right
     // border: 2px dashed black;//just pour regarder l'element
+    #line-divider{
+        display: none;
+        height: 3px;
+        border-radius: 12px;
+        background-color: gray;
+    }
 }
 .brand{//logo
 position: absolute; //With absolute positioning, an element can be placed anywhere on a page
@@ -85,7 +92,6 @@ nav{
     position: absolute;
     top: 0;
     right: 0;
-    background: $nav-background;
     height: $nav-height;
     width: $nav-height;
 }
@@ -113,6 +119,9 @@ nav{
         }
 
     }
+    .nav-container #line-divider{
+        display: block;
+    }
 
     
 }
@@ -127,14 +136,14 @@ nav{
     span::before
     ,span::after{
         cursor: pointer;
-        border-radius: 1px;
+        border-radius: 10px;
         height: 5px;
         width: 30px;
         background: $link-hover-color;
         position: absolute;
         display: block;
         content: "";
-        transition: all 300ms ease-in-out;
+        transition: all 400ms ease-in-out;
     }
     span::before{
         top: -10px;

@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="dist/css/main.css">
     
+    
     <title>Quiz</title>
 </head>
 <body>
@@ -23,6 +24,7 @@
     <a id="nav-toggle"  href="#!"><span></span></a>
   </div>
 
+  <HR id="line-divider"></HR>
 
  
   <ul class="nav-list">
@@ -56,51 +58,5 @@
 </section>
     <!-- fin navigation bar -->
 </body>
-<script>
-     $('#nav-toggle').click(function() {
-      $('nav ul').slideToggle();
-     
-    });
-    $('#nav-toggle').on('click', function() {
-      this.classList.toggle('active')
-    
-    });
-
-  //navbar par defaut black
-    $(".navigation ").css('background-color','black');
-   $("ul>li>a").css('background-color','black');
-   $("ul>li>.search").css('background-color','black');
-   $("ul>li>a").css('color','white');
-    $("#svg-icon-brand").css('background-color','white');
-//display none of icon mode black
-$("#toggle-icon-mode-black").css('display','none');
-//click in  icon white mode
-$("#toggle-icon-mode-white").click(function(){
-   $("body").css("background-color","black");
-   $("#toggle-icon-mode-black").css('display', 'block');
-   $(this).css('display', 'none');
-
-//active white mode
-   $(".navigation ").css('background-color','white');
-   $("ul>li>a").css('background-color','white');
-   $("ul>li>.search").css('background-color','white');
-   $("ul>li>a").css('color','black');
-  $("#svg-icon-brand").css('background-color','white');
-
-});
-//click in icon dark mode
-   $("#toggle-icon-mode-black").click(function(){
-   $("body").css("background-color","white");
-   $("#toggle-icon-mode-white").css('display', 'block');
-   $(this).css('display', 'none');
- //return a dark mode
-   $(".navigation ").css('background-color','black');
-   $("ul>li>a").css('background-color','black');
-   $("ul>li>.search").css('background-color','black');
-   $("ul>li>a").css('color','white');
-    $("#svg-icon-brand").css('background-color','white');
-});
-
-  
-</script>
+<script src="main.js"></script>
 </html>
