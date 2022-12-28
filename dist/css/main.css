@@ -70,12 +70,8 @@ nav ul li .search .fa-user, nav ul li a .fa-user {
   font-size: 20px;
 }
 nav ul li .input-search {
-  margin-right: 20px;
   height: 30px;
   border-radius: 100px;
-}
-nav ul li .input-search:focus {
-  width: 200px;
 }
 
 .nav-mobile {
@@ -96,6 +92,7 @@ nav ul li .input-search:focus {
     padding: 70px 0 15px;
   }
   nav ul {
+    z-index: -4;
     display: none;
   }
   nav ul li {
@@ -108,6 +105,9 @@ nav ul li .input-search:focus {
   }
   nav ul li a:hover::before {
     width: 10%;
+  }
+  nav ul li .input-search:focus {
+    width: 65%;
   }
   .nav-container #line-divider {
     display: block;

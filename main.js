@@ -1,5 +1,14 @@
 $(document).ready(function(){
+       //hide navbar if user click in any place of body =>exact in div with id=quiz
+    $("body").click(function(e){
+   //closest=>selects the first ancestor of the given selector.
+     if($(e.target).closest("#quiz").length>0){
+        $('#nav-toggle').removeClass('active');
+       $('nav ul').hide();
+     }
 
+    });
+    
     $('#nav-toggle').click(function() {
         $('nav ul').slideToggle();
        
@@ -29,6 +38,7 @@ $(document).ready(function(){
      $("ul>li>.search").css('background-color','white');
      $("ul>li>a").css('color','black');
     $("#svg-icon-brand").css('background-color','white');
+    $('.fa-search').css('background-color','white');
   
   });
   //click in icon dark mode

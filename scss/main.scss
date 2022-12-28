@@ -72,14 +72,11 @@ nav{
         }
        
             .input-search{
-                margin-right: 20px;
+                // margin-right: 20px;
                 height: 30px;
                 border-radius:100px;
             }
-            .input-search:focus{
-            width: 200px;
-            // background-color: beige;
-            }
+          
          
         
     
@@ -97,12 +94,13 @@ nav{
 }
 @media only screen and (max-width:$breakpoint){
     .nav-mobile{
-        display: block;
+        display: block; 
     }
     nav{
         width: 100%;
         padding: $nav-height 0 15px;
         ul{
+            z-index:-4;
             display: none;
             li{
                 float: none;
@@ -113,6 +111,9 @@ nav{
                     &:hover::before{
                         width: 10%;
                     }
+                }
+                .input-search:focus{
+                    width:65%;
                 }
               
             }
