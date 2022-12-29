@@ -13,13 +13,7 @@ $(document).ready(function(){
         $('nav ul').slideToggle();
        
       });
-    //event of hover 
-      $('#nav-toggle').hover(function() {
-        this.classList.toggle('active');
-        $('nav ul').show();
-       
-       
-      });
+  
     //event of click 
       $('#nav-toggle').on('click', function() {
         this.classList.toggle('active')
