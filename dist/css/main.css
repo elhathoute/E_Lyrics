@@ -7,6 +7,9 @@ body {
   border-radius: 12px;
   height: 70px;
   background: #fff;
+  position: fixed;
+  left: 0;
+  width: 100%;
 }
 
 .nav-container {
@@ -22,16 +25,16 @@ body {
 
 .brand {
   position: absolute;
-  padding-left: 20px;
-  padding-top: 10px;
+  padding-left: 18px;
   float: left;
-  line-height: 70px;
+  line-height: 90px;
 }
 .brand a {
   text-decoration: none;
 }
-.brand a #svg-icon-brand {
-  border-radius: 10px;
+.brand a i {
+  color: rgb(255, 255, 255);
+  font-size: 25px;
 }
 
 nav {

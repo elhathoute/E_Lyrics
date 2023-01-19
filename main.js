@@ -2,7 +2,7 @@ $(document).ready(function(){
        //hide navbar if user click in any place of body =>exact in div with id=quiz
     $("body").click(function(e){
    //closest=>selects the first ancestor of the given selector.
-     if($(e.target).closest("#quiz").length>0){
+     if($(e.target).closest("#close-nav").length>0){
         $('#nav-toggle').removeClass('active');
        $('nav ul').hide();
      }
@@ -34,6 +34,7 @@ $(document).ready(function(){
      $("#toggle-icon-mode-black").css('display', 'block');
      $(this).css('display', 'none');
   
+     $(".white-bg").css('background','white');
   //active white mode
      $(".navigation ").css('background-color','white');
      $("ul>li>a").css('background-color','white');

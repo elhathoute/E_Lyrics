@@ -1,11 +1,16 @@
 @import  'variables','config';
 
+
 .navigation{
     border-radius:12px;
     // border-top-right-radius: ;
     height: $nav-height;
     background: $nav-background;
     // border: 2px solid black;//just pour regarder l'element
+    position: fixed;
+    left: 0;
+    width: 100%;
+//   top: 0;
 
 }
 .nav-container{
@@ -21,16 +26,19 @@
 }
 .brand{//logo
 position: absolute; //With absolute positioning, an element can be placed anywhere on a page
-padding-left: 20px;
-padding-top: 10px;
-float: left;//specifies whether an element should float to the left, right
-line-height: $nav-height; //specifies the height of a line.
+padding-left: 18px;
+// margin-top: 12px;
 
-  
+float: left;//specifies whether an element should float to the left, right
+line-height:90px; //specifies the height of a line.
+
+
     a{
         text-decoration: none;
-        #svg-icon-brand{
-            border-radius:10px;
+        i{
+            color: rgb(255, 255, 255);
+            font-size: 25px;
+          
         }
     }
 }
