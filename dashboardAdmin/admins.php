@@ -1,3 +1,11 @@
+<?php
+require_once('../adminController.php');
+
+  $admins = new AdminController();
+$resultAdmin = $admins->getAllAdmins();
+
+
+  ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,20 +33,17 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <div class=" d-flex justify-content-between align-items-center">
-                    <h4 class="card-title text-primary">Management-Admins</h4>
+                    <div class=" d-flex justify-content-center pt-2 border-3 rounded-pill bg-secondary align-items-center">
+                    <h4 class="card-title text-white">Management-Admins</h4>
 
                     
-                  <form class="d-flex align-items-center h-100" action="#">
-                    <div class="input-group">
-                      <input type="text" class="form-control bg-transparent border-2 border-primary rounded-pill h-50 mt-2" placeholder="Search ">
-                    </div>
-                  </form>
+               
                 </div>
                     </div>
                     <div class="table-responsive">
-                      <table class="table">
+                      <table id="table-admin" class="table">
                         <thead>
+                         
                           <tr>
                             <th>Id</th>
                             <th> FullName </th>
@@ -50,19 +55,19 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <?php for($i=1;$i<5;$i++){?>
-                                <td><?= $i ?></td>
-                            <td> Full name </td>
-                            <td> name@gmail.com</td>
+                          <?php foreach($resultAdmin as $admins){?>
+                                <td><?= $admins['id']; ?></td>
+                            <td> <?=$admins['full_name']; ?></td>
+                            <td> <?=$admins['email']; ?></td>
 
                             <td>
-                              <img src="assets/images/faces/face1.jpg" class="me-2" alt="image"> David Grey
+                              <img src="assets/images/faces/face1.jpg" class="me-2" alt="image"> 
                             </td>
                             <td>
-                             <?php if($i==1){?>
+                             <?php if($admins['id']==1){?>
                               <label class="badge badge-gradient-success">Login</label>
                               <?php }?>
-                              <?php if($i!=1){?>
+                              <?php if($admins['id']!=1){?>
                               <label class="badge badge-gradient-danger">Logout</label>
                               <?php }?>
 
@@ -94,4 +99,5 @@
     <!-- container-scroller -->
   <?php require_once('scriptsPlugins.php');?>
   </body>
+  
 </html>

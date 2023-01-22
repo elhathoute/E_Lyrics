@@ -13,4 +13,7 @@
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <script src="assets/js/todolist.js"></script>
+    <script src="assets/js/dataTable.js"></script>
     <!-- End custom js for this page -->
+    <!-- datatable -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
