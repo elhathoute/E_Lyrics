@@ -9,4 +9,10 @@ class AdminController{
 
         return $admins;
     }
+     public function CountAdmin()
+    {
+        $countAdmin = Admin::getCountAdmin();
+        return $countAdmin;
+    }
+     
 }

@@ -11,6 +11,14 @@ class Admin{
         return $stm->fetchAll();
     
     }
+    static public function getCountAdmin(){
+        $stm = DB::connex()->prepare("select count(id)  from admins");
+        $stm->execute();
+
+       $result=$stm->fetchColumn();
+        return $result;
+    
+    }
  
 
 }

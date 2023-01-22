@@ -1,4 +1,10 @@
+<?php
+require_once('../adminController.php');
+$admin = new AdminController();
+$adminCount = $admin->CountAdmin();
 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,7 +35,7 @@
                    
                     <h4 class="font-weight-normal mb-3"><span class="mr-4">Admins</span> <i class="mdi mdi-account-supervisor-circle menu-icon"></i>
                     </h4>
-                    <h2 class="mb-5">15</h2>
+                    <h2 class="mb-5"><?= $adminCount; ?></h2>
                    
                   </div>
                 </div>
