@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../adminController.php');
 
   $admins = new AdminController();
@@ -61,13 +62,13 @@ $resultAdmin = $admins->getAllAdmins();
                             <td> <?=$admins['email']; ?></td>
 
                             <td>
-                              <img src="assets/images/faces/face1.jpg" class="me-2" alt="image"> 
+                              <img src="assets/images/faces/<?= $admins['photo']?>" class="me-2" alt="image"> 
                             </td>
                             <td>
-                             <?php if($admins['id']==1){?>
+                             <?php if($_SESSION['success-login'][0]['id']==$admins['id']){?>
                               <label class="badge badge-gradient-success">Login</label>
                               <?php }?>
-                              <?php if($admins['id']!=1){?>
+                              <?php if($_SESSION['success-login'][0]['id']!=$admins['id']){?>
                               <label class="badge badge-gradient-danger">Logout</label>
                               <?php }?>
 

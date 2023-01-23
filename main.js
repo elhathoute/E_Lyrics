@@ -1,61 +1,65 @@
 $(document).ready(function(){
-       //hide navbar if user click in any place of body =>exact in div with id=quiz
-    $("body").click(function(e){
-   //closest=>selects the first ancestor of the given selector.
-     if($(e.target).closest("#close-nav").length>0){
-        $('#nav-toggle').removeClass('active');
-       $('nav ul').hide();
-     }
+  for(let j=1;j<5;j++){ 
+  for(let i=1;i<5;i++){ 
+    setTimeout(function(){
+      $("#img-login-"+j).fadeOut(2000*j*i);
+   },2000);
+   setTimeout(function(){
+    $("#img-login-"+j).fadeIn(2000*j*i);
+ },2000);
+  
+}
+}
 
-    });
-    
-    $('#nav-toggle').on('click',function() {
-        $('nav ul').slideToggle();
+if($('#alert-danger').is(':visible')==true){
+  {
+    $('#alert-danger').fadeOut(5000);
+  }
+  
+}
+if($('#alert-success').is(':visible')==true){
+  {
+    $('#alert-success').fadeOut(5000);
+  }
+  
+}
+ $('#btn-login').hover(function(e){
+  e.preventDefault();
+  setTimeout(function(){
+    $('#btn-login').click();
+   
+
+    },3000);
+    $(this).html('<i class="fas fa-spinner fa-spin"></i>&nbsp; wait');
+  
+});
+
+
+      $('#email-login,#password-login').on('keyup click blur focus select ',function(){
+        $(this).removeClass('bg-dark');
+          $(this).addClass('bg-white');
+        var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
        
-      });
-  
-    //event of click 
-      $('#nav-toggle').on('click', function() {
-        this.classList.toggle('active')
-      
-      });
-  
-    //navbar par defaut black
-      $(".navigation ").css('background-color','black');
-     $("ul>li>a").css('background-color','black');
-     $("ul>li>.search").css('background-color','black');
-     $("ul>li>a").css('color','white');
-      $("#svg-icon-brand").css('background-color','white');
-  //display none of icon mode black
-  $("#toggle-icon-mode-black").css('display','none');
-  //click in  icon white mode
-  $("#toggle-icon-mode-white").click(function(){
-     $("body").css("background-color","black");
-     $("#toggle-icon-mode-black").css('display', 'block');
-     $(this).css('display', 'none');
-  
-     $(".white-bg").css('background','white');
-  //active white mode
-     $(".navigation ").css('background-color','white');
-     $("ul>li>a").css('background-color','white');
-     $("ul>li>.search").css('background-color','white');
-     $("ul>li>a").css('color','black');
-    $("#svg-icon-brand").css('background-color','white');
-    $('.fa-search').css('background-color','white');
-  
-  });
-  //click in icon dark mode
-     $("#toggle-icon-mode-black").click(function(){
-     $("body").css("background-color","white");
-     $("#toggle-icon-mode-white").css('display', 'block');
-     $(this).css('display', 'none');
-   //return a dark mode
-     $(".navigation ").css('background-color','black');
-     $("ul>li>a").css('background-color','black');
-     $("ul>li>.search").css('background-color','black');
-     $("ul>li>a").css('color','white');
-      $("#svg-icon-brand").css('background-color','white');
-  });
+        if(
+          $('#email-login').val()!='' && 
+          $('#password-login').val()!=''&&
+          (($(this).val()).length) >= 4 &&
+          (pattern.test( $('#email-login').val()))==true
+        ){
+          $('#email-login,#password-login').removeClass('is-invalid');
+          $('#email-login,#password-login').addClass('is-valid');
+          $('#btn-login').prop('disabled',false);
+          $('#btn-login').removeClass('btn-primary');
+          $('#btn-login').addClass('btn-success');
+         
+        }else{
+          $('#email-login,#password-login').addClass('is-invalid');
+          $('#email-login,#password-login').removeClass('is-valid');
+          $('#btn-login').prop('disabled',true);
+          $('#btn-login').addClass('btn-primary');
+          $('#btn-login').removeClass('btn-success');
+        }
+      })
   
 
 });

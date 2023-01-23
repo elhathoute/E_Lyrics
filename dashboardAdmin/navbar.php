@@ -14,19 +14,29 @@
       <li class="nav-item nav-profile ">
         <a class="nav-link " id="profileDropdown" href="#" >
           <div class="nav-profile-img">
-            <img src="assets/images/faces/face1.jpg" alt="image">
+
+            <img src="assets/images/faces/<?= $_SESSION['success-login'][0]['photo']?>" alt="image">
+
             <span class="availability-status online"></span>
           </div>
           <div class="nav-profile-text">
-            <p class="mb-1 text-black">Elhathout Abdelaziz</p>
+            <p class="mb-1 text-black">
+              <?php
+              if(isset($_SESSION['success-login'])){
+               
+                echo ($_SESSION['success-login'][0]['full_name']);
+              }
+               
+              
+               ?></p>
           </div>
         </a>
         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
           
         </div>
       </li>
-      <li class="nav-item nav-logout d-none d-lg-block" title="logout">
-        <a class="nav-link" href="../index.html"><span>logout</span>  
+      <li class="nav-item nav-logout  d-lg-block" title="logout">
+        <a class="nav-link" href="../logout.php"><span>logout</span>  
           <i class="mdi mdi-power"></i>
         </a>
       </li>

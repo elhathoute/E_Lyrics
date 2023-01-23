@@ -1,4 +1,9 @@
+<?php
+session_start();
 
+//si on refresh la page session destroy
+session_destroy();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,26 +30,60 @@
 
     <!-- login -->
     <div class="container-fluid" >
+        <div class="row">
+      
       <div class="row">
 
       <div class="" id="close-nav">
     
     <div class="vh-100 d-flex justify-content-center align-items-center">
-      <div class="col-md-4 p-5 shadow-sm border  rounded-3 white-bg">
-          <h2 class="text-center mb-4 text-primary">Login  <span><i class="fa fa-music"></i></span> </h2>
-          <form>
+        
+       
+      <div class="col-md-6  p-5 shadow-sm border bg-white rounded-4 ">
+          <!-- alert -->
+          <?php  if(isset($_SESSION['error-login'])){?>
+            <div class="alert text-center alert-danger" id="alert-danger" role="alert">
+              
+                  <?= $_SESSION['error-login']; ?>
+                  </div>
+                 
+             
+              <?php } ?>
+             
+         
+
+          <div  class="d-flex align-items-center justify-content-between mb-4 text-primary">
+            <?php for ($i = 1; $i <5; $i++){?>
+            <img id="img-login-<?= $i ?>"  class="rounded-pill" src="dashboardAdmin/assets/images/faces/face<?= $i;?>.jpg" alt="">
+            <?php }?>
+        </div>
+          <form action="verifyLogin.php" method="POST"> 
               <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label" id="email">Email address</label>
-                  <input type="email" class="form-control border border-primary black-bg" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <label for="exampleInputEmail1" class="form-label text-secondary " id="email">Email address <i class="fa fa-envelope px-1"></i></label>
+                  <input type="text" name="email" class="form-control login border bg-dark black-bg is-invalid" id="email-login" aria-describedby="emailHelp" placeholder="david@gmail.com" minlength="4" 
+                  >
+                  <div class="valid-feedback">
+                    Looks good 
+                    </div>
+                    <div  class="invalid-feedback">
+                        Please entrer a valid email! 
+                        </div>
               </div>
               <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label " id="password">Password</label>
-                  <input type="password" class="form-control border border-primary black-bg" id="exampleInputPassword1">
+                  <label for="exampleInputPassword1" class="form-label text-secondary " id="password">Password <i class="fa fa-lock px-1"></i></label>
+                  <input type="password" name="password" class="form-control login border bg-dark black-bg is-invalid" id="password-login" placeholder="§hhjGZAGDY32423" minlength="4" >
+                  <div class="valid-feedback">
+                    Looks good!
+                    </div>
+                    <div  class="invalid-feedback">
+                        Please entrer a valid password! 
+                        </div>
               </div>
 
               <div class="d-grid">
-                  <a href="dashboardAdmin/index.php" class="btn btn-primary" type="submit">Login</a>
+                  <button class="btn btn-primary" id="btn-login" disabled type="submit">Login</button>
               </div>
+            
           </form>
          
       </div>

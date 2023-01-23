@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once('../adminController.php');
 $admin = new AdminController();
 $adminCount = $admin->CountAdmin();
@@ -20,6 +22,22 @@ $adminCount = $admin->CountAdmin();
       <?php require_once('sidebar.php');?>
         <div class="main-panel">
           <div class="content-wrapper">
+          <div class="">
+             
+              <!-- alert -->
+          <?php  if(isset($_SESSION['success-login'])){?>
+            <div class="alert text-center alert-success" id="alert-success" role="alert">
+              
+                  Login success M , <span class="font-weight-bold fs-6 text-capitalize"><?=
+                   ( $_SESSION['success-login'][0]['full_name']);
+                
+                   ?></span> 
+                  </div>
+                 
+             
+              <?php } ?>
+            </div>
+
             <div class="page-header">
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
@@ -102,7 +120,7 @@ $adminCount = $admin->CountAdmin();
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
+
   <?php require_once('scriptsPlugins.php');?>
   </body>
 </html>
