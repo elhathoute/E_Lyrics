@@ -52,7 +52,7 @@ session_destroy();
              
          
 
-          <div  class="d-flex align-items-center justify-content-between mb-4 text-primary">
+          <div  class="d-flex align-items-center justify-content-around mb-4 text-primary">
             <?php for ($i = 1; $i <5; $i++){?>
             <img id="img-login-<?= $i ?>"  class="rounded-pill" src="dashboardAdmin/assets/images/faces/face<?= $i;?>.jpg" alt="">
             <?php }?>
