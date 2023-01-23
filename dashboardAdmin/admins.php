@@ -28,6 +28,11 @@ $resultAdmin = $admins->getAllAdmins();
                   <i class="mdi mdi-account-supervisor-circle"></i>
                 </span>Admins
               </h3>
+              <!-- <div class="">
+                <button class="btn btn-block btn-lg btn-gradient-success px-3">
+                + Add ADMIN
+
+                </button></div> -->
             
             </div>
             <div class="row">
@@ -37,9 +42,8 @@ $resultAdmin = $admins->getAllAdmins();
                     <div class=" d-flex justify-content-center pt-2 border-3 rounded-pill bg-secondary align-items-center">
                     <h4 class="card-title text-white">Management-Admins</h4>
 
-                    
-               
                 </div>
+             
                     </div>
                     <div class="table-responsive">
                       <table id="table-admin" class="table">
