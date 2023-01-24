@@ -136,26 +136,34 @@ $resultType = $types->getAllTypes();
       <div class="card">
       <div class="card-body">
                    
-                    <form class="form-sample" method="POST" action="">
-                          <div class="row">
-                            <div class="col-md-12 alert alert-success"  role="alert" id="response-add-song">
-                              
-                            </div>
-                          </div>
+                    <form class="form-sample bg-success" method="POST" action="addSongController.php">
+                          
                       <div class="row">
-                        <div class="col-md-6">
+
+                     
+
+                        <div class="col-md-4">
                           <div class="form-group row">
-                            <label class=" col-form-label">Date</label>
+                            <label class=" col-form-label">Song No:</label>
                             <div class="col-sm-12">
-                              <input type="date" name="date" id="date" class="form-control is-invalid form-control-validate">
+                         <input type="text" class="form-control song-number" name="song-number[]" id="song-number" value="1" readonly="">
+
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Date</label>
+                            <div class="col-sm-12">
+                              <input type="date" name="date[]" id="date" class="form-control is-invalid form-control-validate">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
                           <div class="form-group row">
                             <label class="col-form-label">Titre</label>
                             <div class="col-sm-12">
-                              <input type="text" name="titre" id="titre" class="form-control is-invalid form-control-validate">
+                              <input type="text" name="titre[]" id="titre" class="form-control is-invalid form-control-validate">
                             </div>
                           </div>
                         </div>
@@ -167,7 +175,7 @@ $resultType = $types->getAllTypes();
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control is-invalid form-control-validate" id="parole-ar" name="parole-ar" rows="10"></textarea>
+                                    <textarea class="form-control is-invalid form-control-validate" id="parole-ar" name="parole-ar[]" rows="10"></textarea>
                                 </div>
                             </div>
                           </div>
@@ -178,7 +186,7 @@ $resultType = $types->getAllTypes();
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control is-invalid form-control-validate" id="parole-fr" name="parole-fr" rows="10"></textarea>
+                                    <textarea class="form-control is-invalid form-control-validate" id="parole-fr" name="parole-fr[]" rows="10"></textarea>
                                 </div>
                             </div>
                           </div>
@@ -189,7 +197,7 @@ $resultType = $types->getAllTypes();
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control is-invalid form-control-validate" id="parole-eng" name="parole-eng" rows="10"></textarea>
+                                    <textarea class="form-control is-invalid form-control-validate" id="parole-eng" name="parole-eng[]" rows="10"></textarea>
                                 </div>
                             </div>
                           </div>
@@ -202,7 +210,7 @@ $resultType = $types->getAllTypes();
                           <div class="form-group row">
                             <label class="col-form-label">Admin</label>
                             <div class="col-sm-12">
-                              <select class="form-control " name="admin">
+                              <select class="form-control " name="admin[]" id="admin">
                                 <option selected  id="admin-option" value="<?= $_SESSION['success-login'][0]['id'];?>"><?= $_SESSION['success-login'][0]['full_name'];?></option>
                              
                               </select>
@@ -212,7 +220,7 @@ $resultType = $types->getAllTypes();
                           <div class="form-group row">
                             <label class=" col-form-label">Album : <span class="text-secondary">(Optional)</span> </label>
                             <div class="col-sm-12">
-                              <select class="form-control " name="album">
+                              <select class="form-control " name="album[]" id="album">
                                 <option value="NULL" selected>Select Album</option>
                                 <?php foreach($resultAlbum as $album){?>
                                 <option value="<?= $album['id'];?>"><?= $album['full_name'];?></option>
@@ -231,7 +239,7 @@ $resultType = $types->getAllTypes();
                         <div class="form-group row">
                             <label class=" col-form-label">Artist</label>
                             <div class="col-sm-12">
-                              <select class="form-control is-invalid form-control-validate" name="artist" id="artist-form">
+                              <select class="form-control is-invalid form-control-validate" name="artist[]" id="artist-form">
                                 <option value="NULL" selected>Select Artist</option>{?>
                                 <?php foreach($resultArtist as $artist){?>
                                 <option value="<?= $artist['id'];?>"><?= $artist['full_name'];?></option>
@@ -244,7 +252,7 @@ $resultType = $types->getAllTypes();
                           <div class="form-group row">
                             <label class="col-form-label">Type</label>
                             <div class="col-sm-12">
-                              <select class="form-control is-invalid form-control-validate" name="type" id="type-form">
+                              <select class="form-control is-invalid form-control-validate" name="type[]" id="type-form">
                                 <option value="NULL" selected>Select Type</option>
                                 <?php foreach($resultType as $type){?>
                                 <option value="<?= $type['id'];?>"><?= $type['full_name'];?></option>
@@ -255,17 +263,22 @@ $resultType = $types->getAllTypes();
                           </div>
                         </div>
                       </div>
+                      <hr/>
+                      <!-- next div -->
+                      <div id="next"></div>
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
-                        <button disabled title="submit-form"  type="submit" class=" btn btn-gradient-primary me-2" id="btn-submit">Submit</button>
-                        <button title="reset-form" type="button" class="btn btn-gradient-danger btn-fw" id="reset-form"><i class="mdi mdi-reload"></i></button>
+                        <button  title="submit-form"  type="submit" name="submit" class=" btn btn-gradient-primary me-2" id="btn-submit">Submit</button>
+                        <button type="button" name="addrow" id="addrow" class="btn btn-success pull-right">Add New Row</button>
+                        </form>
+                        <!-- <button title="reset-form" type="button" class="btn btn-gradient-danger btn-fw" id="reset-form"><i class="mdi mdi-reload"></i></button> -->
 
                         </div>
                     </div>
                    
                     <hr class="hr"/>
                   
-                    </form>
+                    
                   </div>
          </div>
       </div>
@@ -342,80 +355,233 @@ $resultType = $types->getAllTypes();
     $('#type').text($('#data-attr-'+i).attr('data-type'));
     
   }
+
   $(document).ready(function(){
-  //  btn reset
-  $('#reset-form').click(function(){
-    $('form').trigger("reset");
+    $('#addrow').click(function(){
+//get lenght of forms
+      var length_form = $('.song-number').length;
+      console.log(length_form)
+      // increase forms by adding 1
+      var i = parseInt(length_form)+parseInt(1);
+      console.log(i)
 
-  })
-   
-    // btn click
-  $('#btn-submit').click(function(e){
- 
-  setTimeout(function(){
+       var new_form = $('#next').append(`
+       <div class="row">
+<div class="row">
+<div class="col-md-4">
+  <div class="form-group row">
+    <label class=" col-form-label">Song No:</label>
+    <div class="col-sm-12">
+ <input type="text" class="form-control song-number" name="song-number[]" id="song-number" value="`+i+`" readonly="">
 
-    $('#btn-submit').prop('disabled',false);
-   
-       $('form').trigger("reset");
-      
-       $('#btn-submit').html('Submit');
+    </div>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group row">
+    <label class=" col-form-label">Date</label>
+    <div class="col-sm-12">
+      <input type="date" name="date[]" id="date`+i+`" class="form-control is-invalid form-control-validate">
+    </div>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group row">
+    <label class="col-form-label">Titre</label>
+    <div class="col-sm-12">
+      <input type="text" name="titre[]" id="titre`+i+`" class="form-control is-invalid form-control-validate">
+    </div>
+  </div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-4">
+  <div class="form-group row">
+    <label class=" col-form-label">Parole_ar</label>
+    <div class="col-sm-12">
+    <div class="form-group">
+           
+            <textarea class="form-control is-invalid form-control-validate" id="parole-ar`+i+`" name="parole-ar[]" rows="10"></textarea>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group row">
+    <label class=" col-form-label">Parole_fr</label>
+    <div class="col-sm-12">
+    <div class="form-group">
+           
+            <textarea class="form-control is-invalid form-control-validate" id="parole-fr`+i+`" name="parole-fr[]" rows="10"></textarea>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group row">
+    <label class=" col-form-label">Parole_eng</label>
+    <div class="col-sm-12">
+    <div class="form-group">
+           
+            <textarea class="form-control is-invalid form-control-validate" id="parole-eng`+i+`" name="parole-eng[]" rows="10"></textarea>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row">
 
+<div class="col-md-6">
 
-    },8000);
-    $('form').submit();
-    $('#btn-submit').prop('disabled',true);
-    $('#btn-submit').html('<i class="fas fa-spinner fa-spin"></i>&nbsp; wait');
+  <div class="form-group row">
+    <label class="col-form-label">Admin</label>
+    <div class="col-sm-12">
+      <select class="form-control " name="admin[]" id="admin`+i+`">
+        <option selected  id="admin-option" value="<?= $_SESSION['success-login'][0]['id'];?>"><?= $_SESSION['success-login'][0]['full_name'];?></option>
+     
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class=" col-form-label">Album : <span class="text-secondary">(Optional)</span> </label>
+    <div class="col-sm-12">
+      <select class="form-control " name="album[]" id="album`+i+`">
+        <option value="NULL" selected>Select Album</option>
+        <?php foreach($resultAlbum as $album){?>
+        <option value="<?= $album['id'];?>"><?= $album['full_name'];?></option>
+       
+        <?php } ?>
+      </select>
+    </div>
+  </div>
 
   
-});
 
 
-// validate form
-$('.form-control-validate').on('keyup change click dblclick blur focus',function(){
-// console.log($('#type').val());
-// enable btn
-  $('#btn-submit').prop("disabled", true);
-  if(
-    $('#date').val()!=''&&
-    $('#titre').val()!='' &&
-    $('#artist-form').val()!='NULL' &&
-    $('#type-form').val()!='NULL' 
-  ){
-  $('#btn-submit').prop("disabled", false);
-  }
-   
-  if(
-    (($(this).val())!='') && (($(this).val())!='NULL')
-    
-  ) {
-   $(this).removeClass('is-invalid');
-   $(this).addClass('is-valid');
+</div>
+
+<div class="col-md-6">
+<div class="form-group row">
+    <label class=" col-form-label">Artist</label>
+    <div class="col-sm-12">
+      <select class="form-control is-invalid form-control-validate" name="artist[]" id="artist-form`+i+`">
+        <option value="NULL" selected>Select Artist</option>{?>
+        <?php foreach($resultArtist as $artist){?>
+        <option value="<?= $artist['id'];?>"><?= $artist['full_name'];?></option>
+       
+        <?php } ?>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-form-label">Type</label>
+    <div class="col-sm-12">
+      <select class="form-control is-invalid form-control-validate" name="type[]" id="type-form`+i+`">
+        <option value="NULL" selected>Select Type</option>
+        <?php foreach($resultType as $type){?>
+        <option value="<?= $type['id'];?>"><?= $type['full_name'];?></option>
+       
+        <?php } ?>
+      </select>
+    </div>
+  </div>
+</div>
+</div>
+<input type="button" class="btnRemove  btn btn-gradient-danger mx-5 w-75" value="Remove"/>
+<hr/>
+</div>
+
+`);
+// Removing form
+$('body').on('click','.btnRemove',function() {
+       $(this).closest('div').remove()
  
-  }else{
-    $('#btn-submit').hover(function(e){
-    
-   })
-   $(this).addClass('is-invalid');
-    $(this).removeClass('is-valid');
-  }
-})
-
-//    send data to the server
-    $('form').submit(function(e) {
-    e.preventDefault(); 
-    var form_data = $(this).serialize(); 
-    $.ajax({
-      type: 'POST',
-      url: 'addSongController.php', 
-      data: form_data,
-      success: function(reponse_success) {
-        $('#response-add-song').text(reponse_success);
-      },
-      error: function(error) {
-        console.log('Error submitting form: ' +error);
-      }
-    });
   });
+    });
+
+
+
+
+
+
+
+
+
+//   //  btn reset
+//   $('#reset-form').click(function(){
+//     $('form').trigger("reset");
+
+//   })
+   
+//     // btn click
+//   $('#btn-submit').click(function(e){
+ 
+//   setTimeout(function(){
+
+//     $('#btn-submit').prop('disabled',false);
+   
+//        $('form').trigger("reset");
+      
+//        $('#btn-submit').html('Submit');
+
+
+//     },8000);
+//     $('form').submit();
+//     $('#btn-submit').prop('disabled',true);
+//     $('#btn-submit').html('<i class="fas fa-spinner fa-spin"></i>&nbsp; wait');
+
+  
+// });
+
+
+// // validate form
+// $('.form-control-validate').on('keyup change click dblclick blur focus',function(){
+// // console.log($('#type').val());
+// // enable btn
+//   $('#btn-submit').prop("disabled", true);
+//   if(
+//     $('#date').val()!=''&&
+//     $('#titre').val()!='' &&
+//     $('#artist-form').val()!='NULL' &&
+//     $('#type-form').val()!='NULL' 
+//   ){
+//   $('#btn-submit').prop("disabled", false);
+//   }
+   
+//   if(
+//     (($(this).val())!='') && (($(this).val())!='NULL')
+    
+//   ) {
+//    $(this).removeClass('is-invalid');
+//    $(this).addClass('is-valid');
+ 
+//   }else{
+//     $('#btn-submit').hover(function(e){
+    
+//    })
+//    $(this).addClass('is-invalid');
+//     $(this).removeClass('is-valid');
+//   }
+// })
+
+// //    send data to the server
+//     $('form').submit(function(e) {
+//     e.preventDefault(); 
+//     var form_data = $(this).serialize(); 
+//     $.ajax({
+//       type: 'POST',
+//       url: 'addSongController.php', 
+//       data: form_data,
+//       success: function(reponse_success) {
+//         $('#response-add-song').text(reponse_success);
+//       },
+//       error: function(error) {
+//         console.log('Error submitting form: ' +error);
+//       }
+//     });
+//   });
 
 });
   </script>
