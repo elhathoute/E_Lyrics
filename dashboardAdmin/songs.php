@@ -2,6 +2,8 @@
 session_start();
 require_once('../songController.php');
 require_once('../artistController.php');
+require_once('../albumController.php');
+require_once('../typeController.php');
 
 $songs = new SongController();
 $resultSong = $songs->getAllSong();
@@ -9,9 +11,12 @@ $resultSong = $songs->getAllSong();
 // artists
 $artists = new ArtistController();
 $resultArtist = $artists->getAllArtists();
-// 
-
-
+// albums
+$albums = new AlbumController();
+$resultAlbum = $albums->getAllAlbums();
+// types
+$types = new TypeController();
+$resultType = $types->getAllTypes();
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,7 +103,9 @@ $resultArtist = $artists->getAllArtists();
                             <a title="edit" class="btn btn-success p-2 me-1" href="#"><i class="fa fa-edit"></i></a>
                             <button title="show More" 
                             type="button"  data-bs-toggle="modal" data-bs-target="#show-more"
-                            class="btn btn-info p-2" id="btn-show-more-<?= $songs['id'];?>" onclick="showMore(<?= $songs['id'];?>)"><i class="fa fa-plus"></i>
+                            class="btn btn-info p-2" 
+                            id="btn-show-more-<?= $songs['id'];?>" 
+                            onclick="showMore(<?= $songs['id'];?>)"><i class="fa fa-plus"></i>
                         </button>
                           
                             </td>
@@ -129,14 +136,18 @@ $resultArtist = $artists->getAllArtists();
       <div class="card">
       <div class="card-body">
                    
-                    <form class="form-sample" method="POST" >
-
+                    <form class="form-sample" method="POST" action="">
+                          <div class="row">
+                            <div class="col-md-12 alert alert-success"  role="alert" id="response-add-song">
+                              
+                            </div>
+                          </div>
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group row">
                             <label class=" col-form-label">Date</label>
                             <div class="col-sm-12">
-                              <input type="date" name="date" id="date" class="form-control">
+                              <input type="date" name="date" id="date" class="form-control is-invalid form-control-validate">
                             </div>
                           </div>
                         </div>
@@ -144,7 +155,7 @@ $resultArtist = $artists->getAllArtists();
                           <div class="form-group row">
                             <label class="col-form-label">Titre</label>
                             <div class="col-sm-12">
-                              <input type="text" name="titre" id="titre" class="form-control">
+                              <input type="text" name="titre" id="titre" class="form-control is-invalid form-control-validate">
                             </div>
                           </div>
                         </div>
@@ -156,7 +167,7 @@ $resultArtist = $artists->getAllArtists();
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control" id="parole-ar" name="parole-ar" rows="10"></textarea>
+                                    <textarea class="form-control is-invalid form-control-validate" id="parole-ar" name="parole-ar" rows="10"></textarea>
                                 </div>
                             </div>
                           </div>
@@ -167,7 +178,7 @@ $resultArtist = $artists->getAllArtists();
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control" id="parole-fr" name="parole-fr" rows="10"></textarea>
+                                    <textarea class="form-control is-invalid form-control-validate" id="parole-fr" name="parole-fr" rows="10"></textarea>
                                 </div>
                             </div>
                           </div>
@@ -178,7 +189,7 @@ $resultArtist = $artists->getAllArtists();
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control" id="parole-eng" name="parole-eng" rows="10"></textarea>
+                                    <textarea class="form-control is-invalid form-control-validate" id="parole-eng" name="parole-eng" rows="10"></textarea>
                                 </div>
                             </div>
                           </div>
@@ -191,21 +202,22 @@ $resultArtist = $artists->getAllArtists();
                           <div class="form-group row">
                             <label class="col-form-label">Admin</label>
                             <div class="col-sm-12">
-                              <select class="form-control">
-                                <option selected name="admin" id="admin" value="<?= $_SESSION['success-login'][0]['id'];?>"><?= $_SESSION['success-login'][0]['full_name'];?></option>
+                              <select class="form-control " name="admin">
+                                <option selected  id="admin-option" value="<?= $_SESSION['success-login'][0]['id'];?>"><?= $_SESSION['success-login'][0]['full_name'];?></option>
                              
                               </select>
                             </div>
                           </div>
 
                           <div class="form-group row">
-                            <label class=" col-form-label">Album</label>
+                            <label class=" col-form-label">Album : <span class="text-secondary">(Optional)</span> </label>
                             <div class="col-sm-12">
-                              <select class="form-control">
-                                <option selected>Select Album</option>
-                                <option>Italy</option>
-                                <option>Russia</option>
-                                <option>Britain</option>
+                              <select class="form-control " name="album">
+                                <option value="NULL" selected>Select Album</option>
+                                <?php foreach($resultAlbum as $album){?>
+                                <option value="<?= $album['id'];?>"><?= $album['full_name'];?></option>
+                               
+                                <?php } ?>
                               </select>
                             </div>
                           </div>
@@ -219,8 +231,8 @@ $resultArtist = $artists->getAllArtists();
                         <div class="form-group row">
                             <label class=" col-form-label">Artist</label>
                             <div class="col-sm-12">
-                              <select class="form-control" name="artist">
-                                <option selected>Select Artist</option>{?>
+                              <select class="form-control is-invalid form-control-validate" name="artist" id="artist-form">
+                                <option value="NULL" selected>Select Artist</option>{?>
                                 <?php foreach($resultArtist as $artist){?>
                                 <option value="<?= $artist['id'];?>"><?= $artist['full_name'];?></option>
                                
@@ -232,11 +244,12 @@ $resultArtist = $artists->getAllArtists();
                           <div class="form-group row">
                             <label class="col-form-label">Type</label>
                             <div class="col-sm-12">
-                              <select class="form-control">
-                                <option selected>Select Type</option>
-                                <option>Italy</option>
-                                <option>Russia</option>
-                                <option>Britain</option>
+                              <select class="form-control is-invalid form-control-validate" name="type" id="type-form">
+                                <option value="NULL" selected>Select Type</option>
+                                <?php foreach($resultType as $type){?>
+                                <option value="<?= $type['id'];?>"><?= $type['full_name'];?></option>
+                               
+                                <?php } ?>
                               </select>
                             </div>
                           </div>
@@ -244,8 +257,8 @@ $resultArtist = $artists->getAllArtists();
                       </div>
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
-                        <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-                        <button type="button" class="btn btn-gradient-danger btn-fw"><i class="mdi mdi-content-cut"></i></button>
+                        <button disabled title="submit-form"  type="submit" class=" btn btn-gradient-primary me-2" id="btn-submit">Submit</button>
+                        <button title="reset-form" type="button" class="btn btn-gradient-danger btn-fw" id="reset-form"><i class="mdi mdi-reload"></i></button>
 
                         </div>
                     </div>
@@ -310,7 +323,9 @@ $resultArtist = $artists->getAllArtists();
     <!-- container-scroller -->
   <?php require_once('scriptsPlugins.php');?>
   </body>
+  
   <script>
+   
 //    modal show more information
     function showMore(i){
     
@@ -325,8 +340,83 @@ $resultArtist = $artists->getAllArtists();
     $('#album').text($('#data-attr-'+i).attr('data-album'));
     $('#artist').text($('#data-attr-'+i).attr('data-artist'));
     $('#type').text($('#data-attr-'+i).attr('data-type'));
-    }
-    // 
+    
+  }
+  $(document).ready(function(){
+  //  btn reset
+  $('#reset-form').click(function(){
+    $('form').trigger("reset");
 
+  })
+   
+    // btn click
+  $('#btn-submit').click(function(e){
+ 
+  setTimeout(function(){
+
+    $('#btn-submit').prop('disabled',false);
+   
+       $('form').trigger("reset");
+      
+       $('#btn-submit').html('Submit');
+
+
+    },8000);
+    $('form').submit();
+    $('#btn-submit').prop('disabled',true);
+    $('#btn-submit').html('<i class="fas fa-spinner fa-spin"></i>&nbsp; wait');
+
+  
+});
+
+
+// validate form
+$('.form-control-validate').on('keyup change click dblclick blur focus',function(){
+// console.log($('#type').val());
+// enable btn
+  $('#btn-submit').prop("disabled", true);
+  if(
+    $('#date').val()!=''&&
+    $('#titre').val()!='' &&
+    $('#artist-form').val()!='NULL' &&
+    $('#type-form').val()!='NULL' 
+  ){
+  $('#btn-submit').prop("disabled", false);
+  }
+   
+  if(
+    (($(this).val())!='') && (($(this).val())!='NULL')
+    
+  ) {
+   $(this).removeClass('is-invalid');
+   $(this).addClass('is-valid');
+ 
+  }else{
+    $('#btn-submit').hover(function(e){
+    
+   })
+   $(this).addClass('is-invalid');
+    $(this).removeClass('is-valid');
+  }
+})
+
+//    send data to the server
+    $('form').submit(function(e) {
+    e.preventDefault(); 
+    var form_data = $(this).serialize(); 
+    $.ajax({
+      type: 'POST',
+      url: 'addSongController.php', 
+      data: form_data,
+      success: function(reponse_success) {
+        $('#response-add-song').text(reponse_success);
+      },
+      error: function(error) {
+        console.log('Error submitting form: ' +error);
+      }
+    });
+  });
+
+});
   </script>
 </html>
