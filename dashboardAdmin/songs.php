@@ -1,11 +1,15 @@
 <?php
 session_start();
 require_once('../songController.php');
+require_once('../artistController.php');
 
 $songs = new SongController();
 $resultSong = $songs->getAllSong();
 
-
+// artists
+$artists = new ArtistController();
+$resultArtist = $artists->getAllArtists();
+// 
 
 
   ?>
@@ -33,8 +37,8 @@ $resultSong = $songs->getAllSong();
                 Songs
               </h3>
               <div class="">
-                <button class="btn btn-block btn-lg btn-gradient-success px-3">
-                + Add Song
+                <button class="btn btn-block btn-lg btn-gradient-success px-3"  data-bs-toggle="modal" data-bs-target="#add-song">
+                <i class="mdi mdi-plus-circle-outline"></i> Add Song
 
                 </button></div>
             
@@ -110,6 +114,155 @@ $resultSong = $songs->getAllSong();
                 </div>
               </div>
             </div>
+            <!-- modal add song -->
+            
+<div class="modal fade " id="add-song" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Song </h5>
+        <button type="button" class="close bg-secondary rounded-pill"  data-bs-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="card">
+      <div class="card-body">
+                   
+                    <form class="form-sample" method="POST" >
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Date</label>
+                            <div class="col-sm-12">
+                              <input type="date" name="date" id="date" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-form-label">Titre</label>
+                            <div class="col-sm-12">
+                              <input type="text" name="titre" id="titre" class="form-control">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Parole_ar</label>
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                                   
+                                    <textarea class="form-control" id="parole-ar" name="parole-ar" rows="10"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Parole_fr</label>
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                                   
+                                    <textarea class="form-control" id="parole-fr" name="parole-fr" rows="10"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Parole_eng</label>
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                                   
+                                    <textarea class="form-control" id="parole-eng" name="parole-eng" rows="10"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                  
+                        <div class="col-md-6">
+                        
+                          <div class="form-group row">
+                            <label class="col-form-label">Admin</label>
+                            <div class="col-sm-12">
+                              <select class="form-control">
+                                <option selected name="admin" id="admin" value="<?= $_SESSION['success-login'][0]['id'];?>"><?= $_SESSION['success-login'][0]['full_name'];?></option>
+                             
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label class=" col-form-label">Album</label>
+                            <div class="col-sm-12">
+                              <select class="form-control">
+                                <option selected>Select Album</option>
+                                <option>Italy</option>
+                                <option>Russia</option>
+                                <option>Britain</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          
+
+
+                        </div>
+
+                        <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class=" col-form-label">Artist</label>
+                            <div class="col-sm-12">
+                              <select class="form-control" name="artist">
+                                <option selected>Select Artist</option>{?>
+                                <?php foreach($resultArtist as $artist){?>
+                                <option value="<?= $artist['id'];?>"><?= $artist['full_name'];?></option>
+                               
+                                <?php } ?>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label class="col-form-label">Type</label>
+                            <div class="col-sm-12">
+                              <select class="form-control">
+                                <option selected>Select Type</option>
+                                <option>Italy</option>
+                                <option>Russia</option>
+                                <option>Britain</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                        <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        <button type="button" class="btn btn-gradient-danger btn-fw"><i class="mdi mdi-content-cut"></i></button>
+
+                        </div>
+                    </div>
+                   
+                    <hr class="hr"/>
+                  
+                    </form>
+                  </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 <!-- modal show more option -->
 
 <div class="modal fade" id="show-more" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -153,11 +306,12 @@ $resultSong = $songs->getAllSong();
     </div>
   </div>
 </div>
+
     <!-- container-scroller -->
   <?php require_once('scriptsPlugins.php');?>
   </body>
   <script>
-   
+//    modal show more information
     function showMore(i){
     
     $('#date-created').text($('#data-attr-date-'+i).attr('data-date'));
@@ -172,5 +326,7 @@ $resultSong = $songs->getAllSong();
     $('#artist').text($('#data-attr-'+i).attr('data-artist'));
     $('#type').text($('#data-attr-'+i).attr('data-type'));
     }
+    // 
+
   </script>
 </html>
