@@ -34,8 +34,8 @@ if(isset($_POST['submit'])){
         $song_date!='' &&
         $song_titre!='' &&
         $song_admin!='' &&
-        $song_artist!=NULL &&
-        $song_type!=NULL
+        $song_artist!='NULL' &&
+        $song_type!='NULL'
     ){
       
             $stm = DB::connex()->prepare("
@@ -44,14 +44,17 @@ if(isset($_POST['submit'])){
             ");
             $stm->execute([$id,$song_date,$song_titre,$song_parole_ar,$song_parole_fr,$song_parole_eng,$song_admin,$song_album,$song_artist,$song_type]);
     
+            $_SESSION['session-etat']=1;
+            $_SESSION['success-error-message'] = 'Success Add Song ';
            
-            $_SESSION['success_add'] = 'Success Add Song ';
             header('location:songs.php');
 
         
     }else{
         // echo 'error some inputs are empty';
-            $_SESSION['error_add'] = 'Error some inputs are empty !';
+        $_SESSION['session-etat']=0;
+        $_SESSION['success-error-message'] = 'Error in Inputs !';
+       
             // echo $_SESSION['error_add'];
             header('location:songs.php');
      }

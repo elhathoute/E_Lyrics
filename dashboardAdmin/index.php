@@ -25,12 +25,12 @@ $adminCount = $admin->CountAdmin();
           <div class="">
              
               <!-- alert -->
-          <?php  if(isset($_SESSION['success-login'])){?>
+          <?php  if(isset($_SESSION['success-login-message'])){?>
             <div class="alert text-center alert-success" id="alert-success" role="alert">
               
-                  Login success M , <span class="font-weight-bold fs-6 text-capitalize"><?=
+                 <?=  $_SESSION['success-login-message'];?> , <span class="font-weight-bold fs-6 text-capitalize"><?=
                    ( $_SESSION['success-login'][0]['full_name']);
-                
+                 unset($_SESSION['success-login-message']);
                    ?></span> 
                   </div>
                  

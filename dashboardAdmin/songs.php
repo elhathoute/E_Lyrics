@@ -22,7 +22,23 @@ $resultType = $types->getAllTypes();
 <html lang="en">
   <head>
    <?php require_once('links.php'); ?>
-   
+   <style>
+    input:invalid {
+  border: 2px dashed red;
+}
+
+input:invalid:required {
+  background-color: orange;
+  color:white;
+}
+
+input:valid {
+  border: 3px solid green;
+  border-radius:3px;
+}
+
+
+    </style>
   </head>
   <body>
     <div class="container-scroller">
@@ -42,37 +58,24 @@ $resultType = $types->getAllTypes();
                 </span>
                 Songs
               </h3>
-            <!-- alert danger -->
-            <?php if(isset($_SESSION['error_add'])){ ?>
-            <div class="alert alert-danger w-75 alert-dismissible fade show mt-3" role="alert">
-                <strong>ERROR! </strong><?=
-                 $_SESSION['error_add'];
-                unset($_SESSION['error_add']);
+            <!-- alert danger alert Success --> 
+            <?php if(isset($_SESSION['success-error-message']) && isset($_SESSION['session-etat'])){ ?>
+            <div class='alert alert-<?php if($_SESSION["session-etat"]==0)
+             { echo "danger";}
+             else{echo "success";}?>' 
+             <?='w-75 alert-dismissible fade show mt-3 me-2'?>
+              role="alert">
+                <strong>Hi !...... </strong><?=
+                 $_SESSION['success-error-message'];
+                unset( $_SESSION['success-error-message']);
                  ?>.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             <?php } ?>
-            <!-- alert Success -->
-            <?php if(isset($_SESSION['success_add'])){ ?>
-            <div class="alert alert-success w-75 alert-dismissible fade show mt-3" role="alert">
-                <strong>Success! </strong><?=
-                $_SESSION['success_add'];
-                unset($_SESSION['success_add']);
-                 ?>.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            <?php } ?>
+            
+            
            
-            <!-- alert drop -->
-            <?php if( isset($_SESSION['success_remove'] )){ ?>
-            <div class="alert alert-danger w-75 alert-dismissible fade show mt-3" role="alert">
-                <strong>Success! </strong><?=
-                 $_SESSION['success_remove'] ;
-                unset( $_SESSION['success_remove'] );
-                 ?>.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            <?php } ?>
+        
 
               <div class="">
                 <button class="btn btn-block btn-lg btn-gradient-success px-3"  data-bs-toggle="modal" data-bs-target="#add-song">
@@ -194,7 +197,7 @@ $resultType = $types->getAllTypes();
                           <div class="form-group row">
                             <label class=" col-form-label">Date : <span class="text-danger">(*)</span> </label>
                             <div class="col-sm-12">
-                              <input type="date" name="date[]" id="date" class="form-control is-invalid form-control-validate">
+                              <input type="date" name="date[]" id="date" class="form-control  form-control-validate" required>
                             </div>
                           </div>
                         </div>
@@ -202,7 +205,7 @@ $resultType = $types->getAllTypes();
                           <div class="form-group row">
                             <label class="col-form-label">Titre : <span class="text-danger">(*)</span></label>
                             <div class="col-sm-12">
-                              <input type="text" name="titre[]" id="titre" class="form-control is-invalid form-control-validate">
+                              <input type="text" name="titre[]" id="titre" class="form-control  form-control-validate"  required>
                             </div>
                           </div>
                         </div>
@@ -278,26 +281,29 @@ $resultType = $types->getAllTypes();
                         <div class="form-group row">
                             <label class=" col-form-label">Artist : <span class="text-danger">(*)</span></label>
                             <div class="col-sm-12">
-                              <select class="form-control is-invalid form-control-validate" name="artist[]" id="artist-form">
-                                <option value="NULL" selected>Select Artist</option>{?>
+                              <select class="form-control bg-warning text-white form-control-validate" name="artist[]" id="artist-form" >
+                                <option value="NULL"  selected>Select Artist</option>{?>
                                 <?php foreach($resultArtist as $artist){?>
                                 <option value="<?= $artist['id'];?>"><?= $artist['full_name'];?></option>
                                
                                 <?php } ?>
                               </select>
-                            </div>
+                              <div class="invalid-feedback">Please select Artist</div>
+                              </div>
+                            
                           </div>
 
                           <div class="form-group row">
                             <label class="col-form-label">Type : <span class="text-danger">(*)</span></label>
                             <div class="col-sm-12">
-                              <select class="form-control is-invalid form-control-validate" name="type[]" id="type-form">
+                              <select class="form-control bg-warning text-white form-control-validate" name="type[]" id="type-form">
                                 <option value="NULL" selected>Select Type</option>
                                 <?php foreach($resultType as $type){?>
                                 <option value="<?= $type['id'];?>"><?= $type['full_name'];?></option>
                                
                                 <?php } ?>
                               </select>
+                              <div class="invalid-feedback">Please select Type</div>
                             </div>
                           </div>
                         </div>
@@ -331,7 +337,7 @@ $resultType = $types->getAllTypes();
 </div>
 <!-- modal show more option -->
 
-<div class="modal fade" id="show-more" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="show-more"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -428,7 +434,7 @@ $resultType = $types->getAllTypes();
   <div class="form-group row">
     <label class=" col-form-label">Date</label>
     <div class="col-sm-12">
-      <input type="date" name="date[]" id="date`+i+`" class="form-control is-invalid form-control-validate">
+      <input type="date" name="date[]" id="date`+i+`" class="form-control  form-control-validate"  required>
     </div>
   </div>
 </div>
@@ -436,7 +442,9 @@ $resultType = $types->getAllTypes();
   <div class="form-group row">
     <label class="col-form-label">Titre</label>
     <div class="col-sm-12">
-      <input type="text" name="titre[]" id="titre`+i+`" class="form-control is-invalid form-control-validate">
+      <input type="text" name="titre[]" id="titre`+i+`" class="form-control  form-control-validate" required>
+    
+
     </div>
   </div>
 </div>
@@ -448,7 +456,7 @@ $resultType = $types->getAllTypes();
     <div class="col-sm-12">
     <div class="form-group">
            
-            <textarea class="form-control is-invalid form-control-validate" id="parole-ar`+i+`" name="parole-ar[]" rows="10"></textarea>
+            <textarea class="form-control bg-dark text-white form-control-validate" id="parole-ar`+i+`" name="parole-ar[]" rows="10" readonly></textarea>
         </div>
     </div>
   </div>
@@ -459,7 +467,7 @@ $resultType = $types->getAllTypes();
     <div class="col-sm-12">
     <div class="form-group">
            
-            <textarea class="form-control is-invalid form-control-validate" id="parole-fr`+i+`" name="parole-fr[]" rows="10"></textarea>
+            <textarea class="form-control bg-secondary text-white  form-control-validate" id="parole-fr`+i+`" name="parole-fr[]" rows="10" ></textarea>
         </div>
     </div>
   </div>
@@ -470,7 +478,7 @@ $resultType = $types->getAllTypes();
     <div class="col-sm-12">
     <div class="form-group">
            
-            <textarea class="form-control is-invalid form-control-validate" id="parole-eng`+i+`" name="parole-eng[]" rows="10"></textarea>
+            <textarea class="form-control  bg-dark text-white  form-control-validate" id="parole-eng`+i+`" name="parole-eng[]" rows="10" readonly></textarea>
         </div>
     </div>
   </div>
@@ -512,26 +520,29 @@ $resultType = $types->getAllTypes();
 <div class="form-group row">
     <label class=" col-form-label">Artist</label>
     <div class="col-sm-12">
-      <select class="form-control is-invalid form-control-validate" name="artist[]" id="artist-form`+i+`">
+      <select class="form-control bg-warning text-white  form-control-validate" name="artist[]" id="artist-form`+i+`">
         <option value="NULL" selected>Select Artist</option>{?>
         <?php foreach($resultArtist as $artist){?>
         <option value="<?= $artist['id'];?>"><?= $artist['full_name'];?></option>
        
         <?php } ?>
       </select>
+      <div class="invalid-feedback">Please select Artist</div>
     </div>
   </div>
 
   <div class="form-group row">
     <label class="col-form-label">Type</label>
     <div class="col-sm-12">
-      <select class="form-control is-invalid form-control-validate" name="type[]" id="type-form`+i+`">
+      <select class="form-control bg-warning text-white form-control-validate" name="type[]" id="type-form`+i+`">
         <option value="NULL" selected>Select Type</option>
         <?php foreach($resultType as $type){?>
         <option value="<?= $type['id'];?>"><?= $type['full_name'];?></option>
        
         <?php } ?>
       </select>
+      <div class="invalid-feedback">Please select Type</div>
+
     </div>
   </div>
 </div>
@@ -546,33 +557,82 @@ $('body').on('click','.btnRemove'+i,function() {
        $('#toggle-icon'+i).remove();
  
   });
+  // translate new form
+  $('#parole-fr'+i).keyup(function() {
+
+// get value of input of text area french
+
+    let parole_fr =  $(this).val();
+// translate from fr to arabic
+
+   let url_fr_ar  = `https://api.mymemory.translated.net/get?q=${parole_fr}&langpair=fr|ar`;
+
+    fetch(url_fr_ar).then(res =>res.json()).then(
+      data=>{
+        $('#parole-ar'+i).val(data.responseData.translatedText);
+        // console.log(data.responseData.translatedText);
+      }
+    );
+// translate from fr to english
+   let url_fr_eng  = `https://api.mymemory.translated.net/get?q=${parole_fr}&langpair=fr|en`;
+
+   fetch(url_fr_eng).then(res =>res.json()).then(
+      data=>{
+        $('#parole-eng'+i).val(data.responseData.translatedText);
+        // console.log(data.responseData.translatedText);
+      }
+    );
+
+   	
+   
+  });
+   // validate form
+   $("form").submit(function(){
+      
+      if(
+        $('#artist-form'+i).val()!='NULL' &&
+        $('#type-form'+i).val()!='NULL'
+      ){
+        return true;
+        // alert('active modal');
+
+      }else{
+        alert('Attention Some inputs Are required!');
+        $('#artist-form'+i).addClass('is-invalid');
+        $('#type-form'+i).addClass('is-invalid');
+        return false;  
+      }
+    });
+
+
   // validate form
 
-$('.form-control-validate').on('keyup change click dblclick blur focus',function(){
+// $('.form-control-validate').on('keyup change click dblclick blur focus',function(){
   
-// if($('#btn-submit').attr('disabled')=='disabled'){
-//   $('#btn-submit').prop("disabled", false);
+// // if($('#btn-submit').attr('disabled')=='disabled'){
+// //   $('#btn-submit').prop("disabled", false);
 
+// // }
+// // if($('#btn-submit').attr('disabled')!='disabled'){
+// //   $('#btn-submit').prop("disabled", true);
+
+// // }
+
+
+// if(
+//   (($(this).val())!='') && (($(this).val())!='NULL')
+  
+// ) {
+//  $(this).removeClass('is-invalid');
+//  $(this).addClass('is-valid');
+
+// }else{
+  
+//   $(this).addClass('is-invalid');
+//   $(this).removeClass('is-valid');
 // }
-// if($('#btn-submit').attr('disabled')!='disabled'){
-//   $('#btn-submit').prop("disabled", true);
+// });
 
-// }
-
-
-if(
-  (($(this).val())!='') && (($(this).val())!='NULL')
-  
-) {
- $(this).removeClass('is-invalid');
- $(this).addClass('is-valid');
-
-}else{
-  
-  $(this).addClass('is-invalid');
-  $(this).removeClass('is-valid');
-}
-});
 // New FOrm slide toggle
 $('#toggle-icon'+i).click(function(){
   
@@ -592,8 +652,26 @@ else if($('#fawsome'+i).prop('class')=='fa fa-chevron-down'){
 
 
     });
+// validate form
+    $("form").submit(function(){
+      
+      if(
+        $('#artist-form').val()!='NULL' &&
+        $('#type-form').val()!='NULL'
+      ){
+        
+        return true;
+        // alert('active modal');
 
+      }else{
+        alert('Attention Some inputs Are required!');
+        $('#artist-form').addClass('is-invalid');
+        $('#type-form').addClass('is-invalid');
+        return false;
 
+        
+      }
+    });	
 // default FOrm slide toggle
 
 $('#toggle-icon-default').click(function(){
@@ -611,7 +689,7 @@ if($('#fawsome-default').prop('class')=='fa fa-chevron-up'){
 
 });
 // default translate
-$('#parole-fr').keyup(function(e) {
+$('#parole-fr').keyup(function() {
 
 // get value of input of text area french
 
