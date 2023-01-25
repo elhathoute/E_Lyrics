@@ -38,7 +38,7 @@ $resultType = $types->getAllTypes();
 
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
-                  <i class="mdi mdi-account-supervisor-circle"></i>
+                <i class="mdi mdi-playlist-music-outline menu-icon"></i>
                 </span>
                 Songs
               </h3>
