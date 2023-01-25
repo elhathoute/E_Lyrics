@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once('../adminController.php');
+require_once('../artistController.php');
 
-  $admins = new AdminController();
-$resultAdmin = $admins->getAllAdmins();
+$artists = new ArtistController();
+$resultArtists = $artists->getAllArtists();
 
 
   ?>
@@ -25,14 +25,12 @@ $resultAdmin = $admins->getAllAdmins();
             <div class="page-header">
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
-                  <i class="mdi mdi-account-supervisor-circle"></i>
-                </span>Admins
-              </h3>
-              <!-- <div class="">
-                <button class="btn btn-block btn-lg btn-gradient-success px-3">
-                + Add ADMIN
+                <i class="mdi mdi-account-supervisor menu-icon"></i>
 
-                </button></div> -->
+
+                </span>Artists
+              </h3>
+             
             
             </div>
             <div class="row">
@@ -40,7 +38,7 @@ $resultAdmin = $admins->getAllAdmins();
                 <div class="card">
                   <div class="card-body">
                     <div class=" d-flex justify-content-center pt-2 border-3 rounded-pill bg-secondary align-items-center">
-                    <h4 class="card-title text-white">Management-Admins</h4>
+                    <h4 class="card-title text-white">Management-Artists</h4>
 
                 </div>
              
@@ -52,37 +50,20 @@ $resultAdmin = $admins->getAllAdmins();
                         <tr class="bg-dark text-white">
                             <th>Id</th>
                             <th> FullName </th>
-                            <th> Email </th>
-                            <th> Photo </th>
-                            <th> Status </th>
+                            <th> Image </th>
+                           
                            
                           </tr>
                         </thead>
                         <tbody class="bg-secondary text-white">
                           <tr>
-                          <?php foreach($resultAdmin as $admins){?>
-                                <td><?= $admins['id']; ?></td>
-                            <td> <?=$admins['full_name']; ?></td>
-                            <td> <?=$admins['email']; ?></td>
-
+                          <?php foreach($resultArtists as $artists){?>
+                                <td><?= $artists['id']; ?></td>
+                            <td> <?=$artists['full_name']; ?></td>
                             <td>
-                              <img src="assets/images/faces/<?= $admins['photo']?>" class="me-2" alt="image"> 
+                              <img src="assets/images/faces/<?= $artists['photo']?>" class="me-2" alt="image"> 
                             </td>
-                            <td>
-                             <?php if($_SESSION['success-login'][0]['id']==$admins['id']){?>
-                              <label class="badge badge-gradient-success">Login</label>
-                              <?php }?>
-                              <?php if($_SESSION['success-login'][0]['id']!=$admins['id']){?>
-                              <label class="badge badge-gradient-danger">Logout</label>
-                              <?php }?>
-
-
-                            </td>
-                          
-                         
                           </tr>
-                          
-                          
                           <?php } ?>
                         </tbody>
                       </table>
