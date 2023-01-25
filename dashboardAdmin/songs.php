@@ -35,17 +35,51 @@ $resultType = $types->getAllTypes();
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="page-header">
+
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                   <i class="mdi mdi-account-supervisor-circle"></i>
                 </span>
                 Songs
               </h3>
+            <!-- alert danger -->
+            <?php if(isset($_SESSION['error_add'])){ ?>
+            <div class="alert alert-danger w-75 alert-dismissible fade show mt-3" role="alert">
+                <strong>ERROR! </strong><?=
+                 $_SESSION['error_add'];
+                unset($_SESSION['error_add']);
+                 ?>.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php } ?>
+            <!-- alert Success -->
+            <?php if(isset($_SESSION['success_add'])){ ?>
+            <div class="alert alert-success w-75 alert-dismissible fade show mt-3" role="alert">
+                <strong>Success! </strong><?=
+                $_SESSION['success_add'];
+                unset($_SESSION['success_add']);
+                 ?>.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php } ?>
+           
+            <!-- alert drop -->
+            <?php if( isset($_SESSION['success_remove'] )){ ?>
+            <div class="alert alert-danger w-75 alert-dismissible fade show mt-3" role="alert">
+                <strong>Success! </strong><?=
+                 $_SESSION['success_remove'] ;
+                unset( $_SESSION['success_remove'] );
+                 ?>.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <?php } ?>
+
               <div class="">
                 <button class="btn btn-block btn-lg btn-gradient-success px-3"  data-bs-toggle="modal" data-bs-target="#add-song">
                 <i class="mdi mdi-plus-circle-outline"></i> Add Song
 
-                </button></div>
+                </button>
+              </div>
             
             </div>
             <div class="row">
@@ -62,7 +96,7 @@ $resultType = $types->getAllTypes();
                       <table id="table-song" class="table table-bordered">
                         <thead>
                          
-                          <tr class="table-secondary ">
+                          <tr class="table-dark text-white">
                             <th>Id</th>
                             <th> date_created </th>
                             <th> titre </th>
@@ -77,7 +111,7 @@ $resultType = $types->getAllTypes();
                         </thead>
                         <tbody>
                             <?php foreach($resultSong as $songs){?>
-                          <tr class="bg-dark text-white">
+                          <tr class="bg-secondary text-white">
                       
                             <td><?= $songs['id'] ?></td>
                             <td
@@ -99,7 +133,9 @@ $resultType = $types->getAllTypes();
                              hidden></td>
                           
                             <td class="d-flex align-items-center justify-content-center">
-                            <a title="supprimer" class="btn btn-danger p-2 me-1" href="#"><i class="fa fa-trash"></i></a>
+                            <a title="supprimer" class="btn btn-danger p-2 me-1" 
+                            href="supprimerSong.php?id=<?= $songs['id'];?> "
+                            onclick= " return confirm('Are you sure to delete?');"><i class="fa fa-trash"></i></a>
                             <a title="edit" class="btn btn-success p-2 me-1" href="#"><i class="fa fa-edit"></i></a>
                             <button title="show More" 
                             type="button"  data-bs-toggle="modal" data-bs-target="#show-more"
@@ -136,12 +172,15 @@ $resultType = $types->getAllTypes();
       <div class="card">
       <div class="card-body">
                    
-                    <form class="form-sample bg-success" method="POST" action="addSongController.php">
-                          
+                    <form class="form-sample bg-white" method="POST" action="addSongController.php">
+                    <div class="row">
+                    <div class="col-md-4">
+                    <button title="show/hide" type="button" class="btn btn-warning mx-1 mb-2 mt-1" id="toggle-icon-default"><i class='fa fa-chevron-up' id="fawsome-default"></i></button>
+                    </div>
+                    </div>
+                  <div class="row" id="new-add-form-default">
+                    
                       <div class="row">
-
-                     
-
                         <div class="col-md-4">
                           <div class="form-group row">
                             <label class=" col-form-label">Song No:</label>
@@ -153,7 +192,7 @@ $resultType = $types->getAllTypes();
                         </div>
                         <div class="col-md-4">
                           <div class="form-group row">
-                            <label class=" col-form-label">Date</label>
+                            <label class=" col-form-label">Date : <span class="text-danger">(*)</span> </label>
                             <div class="col-sm-12">
                               <input type="date" name="date[]" id="date" class="form-control is-invalid form-control-validate">
                             </div>
@@ -161,7 +200,7 @@ $resultType = $types->getAllTypes();
                         </div>
                         <div class="col-md-4">
                           <div class="form-group row">
-                            <label class="col-form-label">Titre</label>
+                            <label class="col-form-label">Titre : <span class="text-danger">(*)</span></label>
                             <div class="col-sm-12">
                               <input type="text" name="titre[]" id="titre" class="form-control is-invalid form-control-validate">
                             </div>
@@ -171,33 +210,33 @@ $resultType = $types->getAllTypes();
                       <div class="row">
                         <div class="col-md-4">
                           <div class="form-group row">
-                            <label class=" col-form-label">Parole_ar</label>
+                            <label class=" col-form-label">Parole_ar : (Optional) </label>
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control is-invalid form-control-validate" id="parole-ar" name="parole-ar[]" rows="10"></textarea>
+                                    <textarea class="form-control bg-dark text-white form-control-validate" id="parole-ar" name="parole-ar[]" readonly rows="10"></textarea>
                                 </div>
                             </div>
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group row">
-                            <label class=" col-form-label">Parole_fr</label>
+                            <label class=" col-form-label">Parole_fr : (Optional) </label>
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control is-invalid form-control-validate" id="parole-fr" name="parole-fr[]" rows="10"></textarea>
+                                    <textarea class="form-control bg-secondary text-white form-control-validate" id="parole-fr" name="parole-fr[]" rows="10" ></textarea>
                                 </div>
                             </div>
                           </div>
                         </div>
                         <div class="col-md-4">
                           <div class="form-group row">
-                            <label class=" col-form-label">Parole_eng</label>
+                            <label class=" col-form-label">Parole_eng : (Optional)</label>
                             <div class="col-sm-12">
                             <div class="form-group">
                                    
-                                    <textarea class="form-control is-invalid form-control-validate" id="parole-eng" name="parole-eng[]" rows="10"></textarea>
+                                    <textarea class="form-control bg-dark text-white form-control-validate" id="parole-eng" name="parole-eng[]" readonly rows="10"></textarea>
                                 </div>
                             </div>
                           </div>
@@ -208,7 +247,7 @@ $resultType = $types->getAllTypes();
                         <div class="col-md-6">
                         
                           <div class="form-group row">
-                            <label class="col-form-label">Admin</label>
+                            <label class="col-form-label">Admin : <span class="text-danger">(*)</span> </label>
                             <div class="col-sm-12">
                               <select class="form-control " name="admin[]" id="admin">
                                 <option selected  id="admin-option" value="<?= $_SESSION['success-login'][0]['id'];?>"><?= $_SESSION['success-login'][0]['full_name'];?></option>
@@ -237,7 +276,7 @@ $resultType = $types->getAllTypes();
 
                         <div class="col-md-6">
                         <div class="form-group row">
-                            <label class=" col-form-label">Artist</label>
+                            <label class=" col-form-label">Artist : <span class="text-danger">(*)</span></label>
                             <div class="col-sm-12">
                               <select class="form-control is-invalid form-control-validate" name="artist[]" id="artist-form">
                                 <option value="NULL" selected>Select Artist</option>{?>
@@ -250,7 +289,7 @@ $resultType = $types->getAllTypes();
                           </div>
 
                           <div class="form-group row">
-                            <label class="col-form-label">Type</label>
+                            <label class="col-form-label">Type : <span class="text-danger">(*)</span></label>
                             <div class="col-sm-12">
                               <select class="form-control is-invalid form-control-validate" name="type[]" id="type-form">
                                 <option value="NULL" selected>Select Type</option>
@@ -263,7 +302,8 @@ $resultType = $types->getAllTypes();
                           </div>
                         </div>
                       </div>
-                      <hr/>
+                     
+                      </div>
                       <!-- next div -->
                       <div id="next"></div>
                     <div class="row">
@@ -275,8 +315,8 @@ $resultType = $types->getAllTypes();
 
                         </div>
                     </div>
-                   
-                    <hr class="hr"/>
+                    
+                    <!-- <hr class="hr"/> -->
                   
                     
                   </div>
@@ -307,19 +347,19 @@ $resultType = $types->getAllTypes();
                     <div class="template-demo">
                         <div class="text-center rounded bg-gradient-primary p-3 mb-3" id="date-created"></div>
                         <div class="text-decoration-underline mb-3 badge bg-dark">Lyrics_AR:</div>
-                      <div class="font-weight-bold text-secondary" id="parole-arabe"></div>
+                      <div class="font-weight-bold text-secondary" id="parole-ar-more"></div>
                      <hr>
                      <div class="text-decoration-underline mb-3 badge bg-dark">Lyrics_FR:</div>
-                      <div class="font-weight-bold text-secondary" id="parole-fr"></div>
+                      <div class="font-weight-bold text-secondary" id="parole-fr-more"></div>
                      <hr>
                      <div class="text-decoration-underline mb-3 badge bg-dark">Lyrics_EN:</div>
-                      <div class="font-weight-bold text-secondary" id="parole-eng"></div>
+                      <div class="font-weight-bold text-secondary" id="parole-eng-more"></div>
                      <hr>
                      <div class="d-flex justify-content-between align-items-center">
-                        <div class="badge bg-secondary" id="admin"></div>
-                        <div class="badge bg-info" id="album"></div>
-                        <div class="badge bg-success" id="artist"></div>
-                        <div class="badge bg-warning" id="type"></div>
+                        <div class="badge bg-secondary" id="admin-more"></div>
+                        <div class="badge bg-info" id="album-more"></div>
+                        <div class="badge bg-success" id="artist-more"></div>
+                        <div class="badge bg-warning" id="type-more"></div>
                      </div>
                     </div>
                   </div>
@@ -344,29 +384,36 @@ $resultType = $types->getAllTypes();
     
     $('#date-created').text($('#data-attr-date-'+i).attr('data-date'));
     
-    $('#parole-arabe').text($('#btn-show-more-'+i).parent().parent().children()[3].title);
-    $('#parole-fr').text($('#btn-show-more-'+i).parent().parent().children()[4].title);
-    $('#parole-eng').text($('#btn-show-more-'+i).parent().parent().children()[5].title);
+    $('#parole-ar-more').text($('#btn-show-more-'+i).parent().parent().children()[3].title);
+    $('#parole-fr-more').text($('#btn-show-more-'+i).parent().parent().children()[4].title);
+    $('#parole-eng-more').text($('#btn-show-more-'+i).parent().parent().children()[5].title);
     // 
 
-    $('#admin').text($('#data-attr-'+i).attr('data-admin'));
-    $('#album').text($('#data-attr-'+i).attr('data-album'));
-    $('#artist').text($('#data-attr-'+i).attr('data-artist'));
-    $('#type').text($('#data-attr-'+i).attr('data-type'));
+    $('#admin-more').text($('#data-attr-'+i).attr('data-admin'));
+    $('#album-more').text($('#data-attr-'+i).attr('data-album'));
+    $('#artist-more').text($('#data-attr-'+i).attr('data-artist'));
+    $('#type-more').text($('#data-attr-'+i).attr('data-type'));
     
   }
 
   $(document).ready(function(){
     $('#addrow').click(function(){
+      // disabled btn submit 
+  // $('#btn-submit').prop("disabled", true);
+
 //get lenght of forms
       var length_form = $('.song-number').length;
-      console.log(length_form)
       // increase forms by adding 1
-      var i = parseInt(length_form)+parseInt(1);
+      var i = (length_form)+parseInt(1);
       console.log(i)
 
        var new_form = $('#next').append(`
        <div class="row">
+      <div class="col-md-4">
+       <button title="show/hide" type="button" class="btn btn-warning mx-1 mb-2" id="toggle-icon`+i+`"><i class='fa fa-chevron-up' id="fawsome`+i+`"></i></button>
+       </div>
+       </div>
+ <div class="row" id="new-add-form`+i+`">
 <div class="row">
 <div class="col-md-4">
   <div class="form-group row">
@@ -489,20 +536,107 @@ $resultType = $types->getAllTypes();
   </div>
 </div>
 </div>
-<input type="button" class="btnRemove  btn btn-gradient-danger mx-5 w-75" value="Remove"/>
-<hr/>
-</div>
+<input type="button" class="btnRemove`+i+`  btn btn-gradient-danger mb-3 mx-4 w-25" value="Remove"/>
 
+</div>
 `);
 // Removing form
-$('body').on('click','.btnRemove',function() {
-       $(this).closest('div').remove()
+$('body').on('click','.btnRemove'+i,function() {
+       $(this).closest('div').remove();
+       $('#toggle-icon'+i).remove();
  
   });
+  // validate form
+
+$('.form-control-validate').on('keyup change click dblclick blur focus',function(){
+  
+// if($('#btn-submit').attr('disabled')=='disabled'){
+//   $('#btn-submit').prop("disabled", false);
+
+// }
+// if($('#btn-submit').attr('disabled')!='disabled'){
+//   $('#btn-submit').prop("disabled", true);
+
+// }
+
+
+if(
+  (($(this).val())!='') && (($(this).val())!='NULL')
+  
+) {
+ $(this).removeClass('is-invalid');
+ $(this).addClass('is-valid');
+
+}else{
+  
+  $(this).addClass('is-invalid');
+  $(this).removeClass('is-valid');
+}
+});
+// New FOrm slide toggle
+$('#toggle-icon'+i).click(function(){
+  
+  $('#new-add-form'+i).slideToggle(2000);
+
+if($('#fawsome'+i).prop('class')=='fa fa-chevron-up'){
+  $('#fawsome'+i).removeClass('fa fa-chevron-up');
+  $('#fawsome'+i).addClass('fa fa-chevron-down');
+}
+else if($('#fawsome'+i).prop('class')=='fa fa-chevron-down'){
+  $('#fawsome'+i).removeClass('fa fa-chevron-down');
+  $('#fawsome'+i).addClass('fa fa-chevron-up');
+}
+})
+
+
+
+
     });
 
 
+// default FOrm slide toggle
 
+$('#toggle-icon-default').click(function(){
+
+  $('#new-add-form-default').slideToggle(2000);
+
+if($('#fawsome-default').prop('class')=='fa fa-chevron-up'){
+  $('#fawsome-default').removeClass('fa fa-chevron-up');
+  $('#fawsome-default').addClass('fa fa-chevron-down');
+}else if($('#fawsome-default').prop('class')=='fa fa-chevron-down'){
+  $('#fawsome-default').removeClass('fa fa-chevron-down');
+  $('#fawsome-default').addClass('fa fa-chevron-up');
+}
+
+
+});
+// default translate
+$('#parole-fr').keyup(function(e) {
+
+// get value of input of text area french
+
+    let parole_fr =  $(this).val();
+// translate from fr to arabic
+
+   let url_fr_ar  = `https://api.mymemory.translated.net/get?q=${parole_fr}&langpair=fr|ar`;
+
+    fetch(url_fr_ar).then(res =>res.json()).then(
+      data=>{
+        $('#parole-ar').val(data.responseData.translatedText);
+        // console.log(data.responseData.translatedText);
+      }
+    );
+// translate from fr to english
+   let url_fr_eng  = `https://api.mymemory.translated.net/get?q=${parole_fr}&langpair=fr|en`;
+
+   fetch(url_fr_eng).then(res =>res.json()).then(
+      data=>{
+        $('#parole-eng').val(data.responseData.translatedText);
+        // console.log(data.responseData.translatedText);
+      }
+    );
+   
+  });
 
 
 
@@ -536,10 +670,9 @@ $('body').on('click','.btnRemove',function() {
 // });
 
 
-// // validate form
+// validate form
 // $('.form-control-validate').on('keyup change click dblclick blur focus',function(){
-// // console.log($('#type').val());
-// // enable btn
+
 //   $('#btn-submit').prop("disabled", true);
 //   if(
 //     $('#date').val()!=''&&
@@ -558,30 +691,12 @@ $('body').on('click','.btnRemove',function() {
 //    $(this).addClass('is-valid');
  
 //   }else{
-//     $('#btn-submit').hover(function(e){
-    
-//    })
-//    $(this).addClass('is-invalid');
+//     $(this).addClass('is-invalid');
 //     $(this).removeClass('is-valid');
 //   }
-// })
+// });
 
-// //    send data to the server
-//     $('form').submit(function(e) {
-//     e.preventDefault(); 
-//     var form_data = $(this).serialize(); 
-//     $.ajax({
-//       type: 'POST',
-//       url: 'addSongController.php', 
-//       data: form_data,
-//       success: function(reponse_success) {
-//         $('#response-add-song').text(reponse_success);
-//       },
-//       error: function(error) {
-//         console.log('Error submitting form: ' +error);
-//       }
-//     });
-//   });
+
 
 });
   </script>

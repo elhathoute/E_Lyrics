@@ -1,10 +1,11 @@
 <?php
 require_once ('../db.php');
+session_start();
 if(isset($_POST['submit'])){
     print_r($_POST);
-    echo '<br/>';
+    // echo '<br/>';
    $number_of_forms= count($_POST['song-number']);
-   echo $number_of_forms;
+//    echo $number_of_forms;
 
    for($i=0;$i<$number_of_forms;$i++){
     // get all inputs
@@ -15,7 +16,15 @@ if(isset($_POST['submit'])){
         $song_parole_fr = $_POST['parole-fr'][$i];
         $song_parole_eng = $_POST['parole-eng'][$i];
         $song_admin = $_POST['admin'][$i];
+    //   check if value of album NULL or not
+        if($_POST['album'][$i]!='NULL'){
         $song_album = $_POST['album'][$i];
+
+        }else if($_POST['album'][$i]=='NULL'){
+            $song_album = NULL;
+        }
+    
+
         $song_artist = $_POST['artist'][$i];
         $song_type = $_POST['type'][$i];
       
@@ -36,11 +45,16 @@ if(isset($_POST['submit'])){
             $stm->execute([$id,$song_date,$song_titre,$song_parole_ar,$song_parole_fr,$song_parole_eng,$song_admin,$song_album,$song_artist,$song_type]);
     
            
-        
+            $_SESSION['success_add'] = 'Success Add Song ';
+            header('location:songs.php');
+
         
     }else{
-        echo 'error some inputs are empty';
-    }
+        // echo 'error some inputs are empty';
+            $_SESSION['error_add'] = 'Error some inputs are empty !';
+            // echo $_SESSION['error_add'];
+            header('location:songs.php');
+     }
    }
 
 }
