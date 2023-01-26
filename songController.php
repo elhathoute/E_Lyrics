@@ -9,6 +9,12 @@ class SongController{
 
         return $songs;
     }
+
+    public function CountSong()
+    {
+        $countSong = Song::getCountSong();
+        return $countSong;
+    }
    
      
 }

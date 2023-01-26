@@ -2,9 +2,25 @@
 session_start();
 
 require_once('../adminController.php');
+require_once('../songController.php');
+require_once('../albumController.php');
+require_once('../typeController.php');
+require_once('../artistController.php');
+// count Admin
 $admin = new AdminController();
 $adminCount = $admin->CountAdmin();
-
+// Count Song
+$song = new SongController();
+$songCount = $song->CountSong();
+// count Album
+$album = new AlbumController();
+$albumCount = $album->CountAlbum();
+// artists
+$artist = new ArtistController();
+$artistCount = $artist->CountArtist();
+// types
+$type = new TypeController();
+$typeCount = $type->CountType();
 
 ?>
 <!DOCTYPE html>
@@ -47,24 +63,77 @@ $adminCount = $admin->CountAdmin();
             
             </div>
             <div class="row">
+          
               <div class="col-md-6 stretch-card grid-margin">
+                
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
                    
                     <h4 class="font-weight-normal mb-3"><span class="mr-4">Admins</span> <i class="mdi mdi-account-supervisor-circle menu-icon"></i>
                     </h4>
-                    <h2 class="mb-5"><?= $adminCount; ?></h2>
+                    <h2 data-admin="<?= $adminCount; ?>" id="admin-count" class="mb-5">  <a class="text-decoration-none fs-1" href="admins.php">
+                      <!-- <?= $adminCount; ?> -->
+                      </a></h2>
+                    <script>
+                // admin Count
+                let adminCount=0;
+                 setInterval(() => {
+                  if(adminCount<$('#admin-count').attr('data-admin')){
+                    adminCount++;
+                  }
+               $('#admin-count').html(adminCount);
+                      }, 1000);
+                      // Album Count
+                      let albumCount=0;
+                 setInterval(() => {
+                  if(albumCount<$('#album-count').attr('data-album')){
+                    albumCount++;
+                  }
+               $('#album-count').html(albumCount);
+                      }, 1000);
+                    // Artist Count
+                    let artistCount=0;
+                 setInterval(() => {
+                  if(artistCount<$('#artist-count').attr('data-artist')){
+                    artistCount++;
+                  }
+               $('#artist-count').html(artistCount);
+                      }, 1000);
+                  // type Count
+                  let typeCount=0;
+                 setInterval(() => {
+                  if(typeCount<$('#type-count').attr('data-type')){
+                    typeCount++;
+                  }
+               $('#type-count').html(typeCount);
+                      }, 1000);
+                      // song
+                      let songCount=0;
+                 setInterval(() => {
+                  if(songCount<$('#song-count').attr('data-song')){
+                    songCount++;
+                  }
+               $('#song-count').html(songCount);
+                      }, 1000);
+                  
+                      
+                    </script>
+                    
                    
                   </div>
                 </div>
+              
               </div>
+              
               <div class="col-md-6 stretch-card grid-margin">
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
                    
                     <h4 class="font-weight-normal mb-3">Albums </span> <i class="mdi mdi-album menu-icon"></i>
                     </h4>
-                    <h2 class="mb-5">45</h2>
+                    <h2 data-album="<?= $albumCount;?>" id="album-count" class="mb-5"><a class="text-decoration-none fs-1" href="albums.php">
+                      <!-- <?= $albumCount;?> -->
+                    </a></h2>
                    
                   </div>
                 </div>
@@ -74,7 +143,9 @@ $adminCount = $admin->CountAdmin();
                   <div class="card-body">
                     <h4 class="font-weight-normal mb-3">Artists <span> <i class="mdi mdi-account-supervisor menu-icon"></i></span>
                     </h4>
-                    <h2 class="mb-5">95</h2>
+                    <h2 data-artist="<?= $artistCount;?>" id="artist-count" class="mb-5"><a class="text-decoration-none fs-1" href="artists.php">
+                      <!-- <?= $artistCount;?> -->
+                    </a></h2>
                    
                   </div>
                 </div>
@@ -85,7 +156,9 @@ $adminCount = $admin->CountAdmin();
                   <div class="card-body">
                     <h4 class="font-weight-normal mb-3">Categories <span> <i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
                     </h4>
-                    <h2 class="mb-5">10</h2>
+                    <h2 data-type="<?= $typeCount;?>" id="type-count" class="mb-5"><a class="text-decoration-none fs-1" href="categories.php">
+                      <!-- <?= $typeCount;?> -->
+                    </a></h2>
                    
                   </div>
                 </div>
@@ -96,7 +169,10 @@ $adminCount = $admin->CountAdmin();
                   <div class="card-body">
                     <h4 class="font-weight-normal mb-3">Songs <span> <i class="mdi mdi-playlist-music-outline menu-icon"></i></span>
                     </h4>
-                    <h2 class="mb-5">16</h2>
+                    <h2 data-song="<?= $songCount; ?>" id="song-count" class="mb-5"><a class="text-decoration-none fs-1" href="songs.php">
+                      <!-- <?= $songCount ?> -->
+
+                    </a></h2>
                    
                   </div>
                 </div>

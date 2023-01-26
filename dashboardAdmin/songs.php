@@ -22,23 +22,7 @@ $resultType = $types->getAllTypes();
 <html lang="en">
   <head>
    <?php require_once('links.php'); ?>
-   <style>
-    input:invalid {
-  border: 2px dashed red;
-}
-
-input:invalid:required {
-  background-color: orange;
-  color:white;
-}
-
-input:valid {
-  border: 3px solid green;
-  border-radius:3px;
-}
-
-
-    </style>
+   
   </head>
   <body>
     <div class="container-scroller">
@@ -58,24 +42,9 @@ input:valid {
                 </span>
                 Songs
               </h3>
-            <!-- alert danger alert Success --> 
-            <?php if(isset($_SESSION['success-error-message']) && isset($_SESSION['session-etat'])){ ?>
-            <div class='alert alert-<?php if($_SESSION["session-etat"]==0)
-             { echo "danger";}
-             else{echo "success";}?>' 
-             <?='w-75 alert-dismissible fade show mt-3 me-2'?>
-              role="alert">
-                <strong>Hi !...... </strong><?=
-                 $_SESSION['success-error-message'];
-                unset( $_SESSION['success-error-message']);
-                 ?>.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            <?php } ?>
-            
-            
            
-        
+        <!-- alerts -->
+        <?php require_once('alerts.php');?>
 
               <div class="">
                 <button class="btn btn-block btn-lg btn-gradient-success px-3"  data-bs-toggle="modal" data-bs-target="#add-song">
@@ -121,11 +90,11 @@ input:valid {
                             id="data-attr-date-<?= $songs['id'] ?>"
                             data-date="<?= $songs['date_created'] ?>"
                             ><?= $songs['date_created'] ?></td>
-                            <td><?= $songs['titre'] ?></td>
+                            <td id ="data-attr-titre-<?= $songs['id'] ?>"><?= $songs['titre'] ?></td>
                             
-                            <td title="<?= $songs['parole_ar']; ?>"><?= substr($songs['parole_ar'], 0, 10); ?></td>
-                            <td title="<?= $songs['parole_fr']; ?>"><?= substr($songs['parole_fr'], 0, 10);?></td>
-                            <td title="<?= $songs['parole_eng']; ?>"><?= substr($songs['parole_eng'], 0, 10); ?></td>
+                            <td id="data-attr-ar-<?= $songs['id'] ?>" title="<?= $songs['parole_ar']; ?>"><?= substr($songs['parole_ar'], 0, 10); ?></td>
+                            <td  id="data-attr-fr-<?= $songs['id'] ?>" title="<?= $songs['parole_fr']; ?>"><?= substr($songs['parole_fr'], 0, 10);?></td>
+                            <td  id="data-attr-en-<?= $songs['id'] ?>" title="<?= $songs['parole_eng']; ?>"><?= substr($songs['parole_eng'], 0, 10); ?></td>
                               
                             <td 
                             id="data-attr-<?= $songs['id'] ?>"
@@ -139,7 +108,13 @@ input:valid {
                             <a title="supprimer" class="btn btn-danger p-2 me-1" 
                             href="supprimerSong.php?id=<?= $songs['id'];?> "
                             onclick= " return confirm('Are you sure to delete?');"><i class="fa fa-trash"></i></a>
-                            <a title="edit" class="btn btn-success p-2 me-1" href="#"><i class="fa fa-edit"></i></a>
+                            <button data-bs-toggle="modal" 
+                            type="button" data-bs-target="#update-song" 
+                            title="edit" 
+                            class="btn btn-success p-2 me-1"
+                            id="btn-update-<?= $songs['id'];?>"
+                            onclick="update(<?= $songs['id'];?>)"><i class="fa fa-edit"></i></button>
+                            
                             <button title="show More" 
                             type="button"  data-bs-toggle="modal" data-bs-target="#show-more"
                             class="btn btn-info p-2" 
@@ -175,7 +150,7 @@ input:valid {
       <div class="card">
       <div class="card-body">
                    
-                    <form class="form-sample bg-white" method="POST" action="addSongController.php">
+                    <form id="form-add" class="form-sample bg-white" method="POST" action="addSongController.php">
                     <div class="row">
                     <div class="col-md-4">
                     <button title="show/hide" type="button" class="btn btn-warning mx-1 mb-2 mt-1" id="toggle-icon-default"><i class='fa fa-chevron-up' id="fawsome-default"></i></button>
@@ -378,6 +353,162 @@ input:valid {
     </div>
   </div>
 </div>
+<!-- MODAL OF UPDATE  -->
+<div class="modal fade " id="update-song" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Song </h5>
+        <button type="button" class="close bg-secondary rounded-pill"  data-bs-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="card">
+      <div class="card-body">
+                   
+   <form id="form-update" class="form-sample bg-white" method="POST" action="updateSongController.php">
+                   
+                  <div class="row" id="form-update">
+                    
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Song id:</label>
+                            <div class="col-sm-12">
+                         <input type="text" class="form-control song-id" name="song-id-update" id="song-id-update"  readonly="">
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Date : <span class="text-danger">(*)</span> </label>
+                            <div class="col-sm-12">
+                              <input type="date" name="date-update" id="date-update" class="form-control  form-control-validate" required>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class="col-form-label">Titre : <span class="text-danger">(*)</span></label>
+                            <div class="col-sm-12">
+                              <input type="text" name="titre-update" id="titre-update" class="form-control  form-control-validate"  required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Parole_ar : (Optional) </label>
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                                   
+                                    <textarea class="form-control bg-dark text-white form-control-validate" id="parole-ar-update" name="parole-ar-update" readonly rows="10"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Parole_fr : (Optional) </label>
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                                   
+                                    <textarea class="form-control bg-secondary text-white form-control-validate" id="parole-fr-update" name="parole-fr-update" rows="10" ></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group row">
+                            <label class=" col-form-label">Parole_eng : (Optional)</label>
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                                   
+                                    <textarea class="form-control bg-dark text-white form-control-validate" id="parole-eng-update" name="parole-eng-update" readonly rows="10"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                  
+                        <div class="col-md-6">
+                        
+                          <div class="form-group row">
+                            <label class="col-form-label">Admin : <span class="text-danger">(*)</span> </label>
+                            <div class="col-sm-12">
+                              <select class="form-control " name="admin-update" id="admin-update">
+                                <option selected  id="admin-option" value="<?= $_SESSION['success-login'][0]['id'];?>"><?= $_SESSION['success-login'][0]['full_name'];?></option>
+                             
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label class=" col-form-label">Album : <span class="text-secondary">(Optional)</span> </label>
+                            <div class="col-sm-12">
+                              <select class="form-control " name="album-update" id="album-update">
+                                <option value="NULL" selected>Select Album</option>
+                                <?php foreach($resultAlbum as $album){?>
+                                <option value="<?= $album['id'];?>"><?= $album['full_name'];?></option>
+                               
+                                <?php } ?>
+                              </select>
+                            </div>
+                          </div>
+
+                          
+
+
+                        </div>
+
+                        <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class=" col-form-label">Artist : <span class="text-danger">(*)</span></label>
+                            <div class="col-sm-12">
+                              <select class="form-control bg-warning text-white form-control-validate" name="artist-update" id="artist-form-update" >
+                                <option value="NULL"  selected>Select Artist</option>{?>
+                                <?php foreach($resultArtist as $artist){?>
+                                <option value="<?= $artist['id'];?>"><?= $artist['full_name'];?></option>
+                               
+                                <?php } ?>
+                              </select>
+                              <div class="invalid-feedback">Please select Artist</div>
+                              </div>
+                            
+                          </div>
+
+                          <div class="form-group row">
+                            <label class="col-form-label">Type : <span class="text-danger">(*)</span></label>
+                            <div class="col-sm-12">
+                              <select class="form-control bg-warning text-white form-control-validate" name="type-update" id="type-form-update">
+                                <option value="NULL" selected>Select Type</option>
+                                <?php foreach($resultType as $type){?>
+                                <option value="<?= $type['id'];?>"><?= $type['full_name'];?></option>
+                               
+                                <?php } ?>
+                              </select>
+                              <div class="invalid-feedback">Please select Type</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                     
+                      </div>
+                     
+                  </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+      <button  title="update-form-btn"  type="submit" name="update" class=" btn btn-gradient-warning me-2" id="btn-update">Update</button>
+        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+        
+      </div>
+      </form>
+    </div>
 
     <!-- container-scroller -->
   <?php require_once('scriptsPlugins.php');?>
@@ -401,18 +532,125 @@ input:valid {
     $('#type-more').text($('#data-attr-'+i).attr('data-type'));
     
   }
+  // update song
+  function update(i){
+    //  id
+    $('#song-id-update').val(i);
+    // date
+    $('#date-update').val($('#btn-update-'+i).parent().parent().children('#data-attr-date-'+i).html());
+    //titre
+    $('#titre-update').val($('#btn-update-'+i).parent().parent().children('#data-attr-titre-'+i).html());
+    //parole_fr
+    $('#parole-fr-update').val($('#btn-update-'+i).parent().parent().children('#data-attr-fr-'+i).attr('title'));
+    if($('#btn-update-'+i).parent().parent().children('#data-attr-fr-'+i).attr('title')==''){
+      $('#parole-ar-update').val('');
+    $('#parole-eng-update').val('');
+    }else{
+      $('#parole-ar-update').val($('#btn-update-'+i).parent().parent().children('#data-attr-ar-'+i).attr('title'));
+      $('#parole-eng-update').val($('#btn-update-'+i).parent().parent().children('#data-attr-en-'+i).attr('title'));
+    }
+
+    // get album  to update
+  let select_album =$("#album-update option");
+  for(let j=0;j<select_album.length;j++){
+    let value_select_album=select_album[j].attributes.value.nodeValue;
+    let text_select_album=select_album[j].firstChild.nodeValue;
+    let element_selectioner_update=$('#btn-update-'+i).parent().parent().children('#data-attr-'+i).attr('data-album');
+    if(element_selectioner_update === text_select_album){
+      $('#album-update').val(value_select_album);
+    }
+
+  }
+  //get  artist to update
+  let select_artist =$("#artist-form-update option");
+  for(let j=0;j<select_artist.length;j++){
+    let value_select_artist=select_artist[j].attributes.value.nodeValue;
+    let text_select_artist=select_artist[j].firstChild.nodeValue;
+    let element_selectioner_update=$('#btn-update-'+i).parent().parent().children('#data-attr-'+i).attr('data-artist');
+    if(element_selectioner_update === text_select_artist){
+      $('#artist-form-update').val(value_select_artist);
+    }
+
+  }
+    //get  type to update
+    let select_type =$("#type-form-update option");
+  for(let j=0;j<select_type.length;j++){
+    let value_select_type=select_type[j].attributes.value.nodeValue;
+    let text_select_type=select_type[j].firstChild.nodeValue;
+    let element_selectioner_update=$('#btn-update-'+i).parent().parent().children('#data-attr-'+i).attr('data-type');
+    if(element_selectioner_update === text_select_type){
+      $('#type-form-update').val(value_select_type);
+    }
+
+  }
+   
+    
+
+// translate
+    $('#parole-fr-update').keyup(function() {
+
+// get value of input of text area french
+
+    let parole_fr =  $(this).val();
+// translate from fr to arabic
+    if(parole_fr!==''){
+   let url_fr_ar  = `https://api.mymemory.translated.net/get?q=${parole_fr}&langpair=fr|ar`;
+
+    fetch(url_fr_ar).then(res =>res.json()).then(
+      data=>{
+        $('#parole-ar-update').val(data.responseData.translatedText);
+       
+      }
+    );
+// translate from fr to english
+   let url_fr_eng  = `https://api.mymemory.translated.net/get?q=${parole_fr}&langpair=fr|en`;
+
+   fetch(url_fr_eng).then(res =>res.json()).then(
+      data=>{
+        $('#parole-eng-update').val(data.responseData.translatedText);
+       
+      }
+    );
+
+  }else{
+    $('#parole-ar-update').val('');
+    $('#parole-eng-update').val('');
+  }
+   
+  });
+
+  // validate form update
+   
+    $("#form-update").submit(function(){
+      
+      if(
+        $('#artist-form-update').val()!='NULL' &&
+        $('#type-form-update').val()!='NULL'
+      ){
+        return true;
+       
+
+      }else{
+        alert('Attention Some inputs Are required!');
+        // $('#artist-form-update').addClass('is-invalid');
+        // $('#type-form-update').addClass('is-invalid');
+        return false;  
+      }
+    });
+
+
+  }
 
   $(document).ready(function(){
     $('#addrow').click(function(){
-      // disabled btn submit 
-  // $('#btn-submit').prop("disabled", true);
+     
 
 //get lenght of forms
       var length_form = $('.song-number').length;
       // increase forms by adding 1
       var i = (length_form)+parseInt(1);
-      console.log(i)
-
+      
+// append new form to previous forms 
        var new_form = $('#next').append(`
        <div class="row">
       <div class="col-md-4">
@@ -478,7 +716,8 @@ input:valid {
     <div class="col-sm-12">
     <div class="form-group">
            
-            <textarea class="form-control  bg-dark text-white  form-control-validate" id="parole-eng`+i+`" name="parole-eng[]" rows="10" readonly></textarea>
+            <textarea class="form-control  bg-dark text-white  form-control-
+            " id="parole-eng`+i+`" name="parole-eng[]" rows="10" readonly></textarea>
         </div>
     </div>
   </div>
@@ -510,12 +749,7 @@ input:valid {
       </select>
     </div>
   </div>
-
-  
-
-
 </div>
-
 <div class="col-md-6">
 <div class="form-group row">
     <label class=" col-form-label">Artist</label>
@@ -551,10 +785,17 @@ input:valid {
 
 </div>
 `);
-// Removing form
+// Removing new form 
 $('body').on('click','.btnRemove'+i,function() {
-       $(this).closest('div').remove();
-       $('#toggle-icon'+i).remove();
+  // slideToggle of new Form 
+   $(this).closest('div').slideToggle(2000);
+  //  wait 2s and remove the div(big parent) contain new form
+  setTimeout(function(){
+    $(this).closest('div').remove();
+     $('#toggle-icon'+i).remove();
+    },2000);
+      
+     
  
   });
   // translate new form
@@ -564,13 +805,13 @@ $('body').on('click','.btnRemove'+i,function() {
 
     let parole_fr =  $(this).val();
 // translate from fr to arabic
-
+if(parole_fr!=''){
    let url_fr_ar  = `https://api.mymemory.translated.net/get?q=${parole_fr}&langpair=fr|ar`;
 
     fetch(url_fr_ar).then(res =>res.json()).then(
       data=>{
         $('#parole-ar'+i).val(data.responseData.translatedText);
-        // console.log(data.responseData.translatedText);
+    
       }
     );
 // translate from fr to english
@@ -579,60 +820,64 @@ $('body').on('click','.btnRemove'+i,function() {
    fetch(url_fr_eng).then(res =>res.json()).then(
       data=>{
         $('#parole-eng'+i).val(data.responseData.translatedText);
-        // console.log(data.responseData.translatedText);
+       
       }
     );
-
-   	
+  }
+    else{
+      $('#parole-ar'+i).val('');
+      $('#parole-eng'+i).val('');
+  }
    
   });
-   // validate form
-   $("form").submit(function(){
+
+  
+// validate select New form
+  // artist
+  $('#artist-form'+i).change(function(){
+  if($(this).val() !='NULL'){
+   $(this).addClass('is-valid');
+   $(this).removeClass('is-invalid');
+   $(this).removeClass('bg-warning');
+   $(this).addClass('bg-dark');
+  }else{
+  $(this).addClass('is-invalid');
+  $(this).removeClass('is-valid');
+   $(this).addClass('bg-warning');
+   $(this).removeClass('bg-dark');
+  }
+ });
+  // type
+ $('#type-form'+i).change(function(){
+  if($(this).val() !='NULL'){
+   $(this).addClass('is-valid');
+   $(this).removeClass('is-invalid');
+   $(this).removeClass('bg-warning');
+   $(this).addClass('bg-dark');
+  }else{
+  $(this).addClass('is-invalid');
+  $(this).removeClass('is-valid');
+   $(this).addClass('bg-warning');
+   $(this).removeClass('bg-dark');
+  }
+ });
+     
+   // validate add form (new)
+   $("#form-add").submit(function(){
       
       if(
         $('#artist-form'+i).val()!='NULL' &&
         $('#type-form'+i).val()!='NULL'
       ){
         return true;
-        // alert('active modal');
 
       }else{
         alert('Attention Some inputs Are required!');
-        $('#artist-form'+i).addClass('is-invalid');
-        $('#type-form'+i).addClass('is-invalid');
+        // $('#artist-form'+i).addClass('is-invalid');
+        // $('#type-form'+i).addClass('is-invalid');
         return false;  
       }
     });
-
-
-  // validate form
-
-// $('.form-control-validate').on('keyup change click dblclick blur focus',function(){
-  
-// // if($('#btn-submit').attr('disabled')=='disabled'){
-// //   $('#btn-submit').prop("disabled", false);
-
-// // }
-// // if($('#btn-submit').attr('disabled')!='disabled'){
-// //   $('#btn-submit').prop("disabled", true);
-
-// // }
-
-
-// if(
-//   (($(this).val())!='') && (($(this).val())!='NULL')
-  
-// ) {
-//  $(this).removeClass('is-invalid');
-//  $(this).addClass('is-valid');
-
-// }else{
-  
-//   $(this).addClass('is-invalid');
-//   $(this).removeClass('is-valid');
-// }
-// });
-
 // New FOrm slide toggle
 $('#toggle-icon'+i).click(function(){
   
@@ -648,28 +893,37 @@ else if($('#fawsome'+i).prop('class')=='fa fa-chevron-down'){
 }
 })
 
-
-
-
     });
-// validate form
-    $("form").submit(function(){
+  
+    // end of btn add new form
+
+// validate select default form
+ $('#artist-form , #type-form').change(function(){
+  if($(this).val() !='NULL'){
+   $(this).addClass('is-valid');
+   $(this).removeClass('is-invalid');
+   $(this).removeClass('bg-warning');
+   $(this).addClass('bg-dark');
+  }else{
+  $(this).addClass('is-invalid');
+  $(this).removeClass('is-valid');
+   $(this).addClass('bg-warning');
+   $(this).removeClass('bg-dark');
+  }
+ });
+// validate Update-form 
+    $("#form-add").submit(function(){
       
       if(
         $('#artist-form').val()!='NULL' &&
         $('#type-form').val()!='NULL'
       ){
-        
         return true;
-        // alert('active modal');
-
       }else{
         alert('Attention Some inputs Are required!');
-        $('#artist-form').addClass('is-invalid');
-        $('#type-form').addClass('is-invalid');
-        return false;
-
-        
+        // $('#artist-form').addClass('is-invalid');
+        // $('#type-form').addClass('is-invalid');
+        return false; 
       }
     });	
 // default FOrm slide toggle
@@ -691,17 +945,15 @@ if($('#fawsome-default').prop('class')=='fa fa-chevron-up'){
 // default translate
 $('#parole-fr').keyup(function() {
 
-// get value of input of text area french
-
     let parole_fr =  $(this).val();
 // translate from fr to arabic
-
+if(parole_fr!=''){
    let url_fr_ar  = `https://api.mymemory.translated.net/get?q=${parole_fr}&langpair=fr|ar`;
 
     fetch(url_fr_ar).then(res =>res.json()).then(
       data=>{
         $('#parole-ar').val(data.responseData.translatedText);
-        // console.log(data.responseData.translatedText);
+
       }
     );
 // translate from fr to english
@@ -710,72 +962,15 @@ $('#parole-fr').keyup(function() {
    fetch(url_fr_eng).then(res =>res.json()).then(
       data=>{
         $('#parole-eng').val(data.responseData.translatedText);
-        // console.log(data.responseData.translatedText);
       }
     );
+  }
+  else{
+    $('#parole-ar').val('');
+    $('#parole-eng').val('');
+  }
    
   });
-
-
-
-
-
-
-//   //  btn reset
-//   $('#reset-form').click(function(){
-//     $('form').trigger("reset");
-
-//   })
-   
-//     // btn click
-//   $('#btn-submit').click(function(e){
- 
-//   setTimeout(function(){
-
-//     $('#btn-submit').prop('disabled',false);
-   
-//        $('form').trigger("reset");
-      
-//        $('#btn-submit').html('Submit');
-
-
-//     },8000);
-//     $('form').submit();
-//     $('#btn-submit').prop('disabled',true);
-//     $('#btn-submit').html('<i class="fas fa-spinner fa-spin"></i>&nbsp; wait');
-
-  
-// });
-
-
-// validate form
-// $('.form-control-validate').on('keyup change click dblclick blur focus',function(){
-
-//   $('#btn-submit').prop("disabled", true);
-//   if(
-//     $('#date').val()!=''&&
-//     $('#titre').val()!='' &&
-//     $('#artist-form').val()!='NULL' &&
-//     $('#type-form').val()!='NULL' 
-//   ){
-//   $('#btn-submit').prop("disabled", false);
-//   }
-   
-//   if(
-//     (($(this).val())!='') && (($(this).val())!='NULL')
-    
-//   ) {
-//    $(this).removeClass('is-invalid');
-//    $(this).addClass('is-valid');
- 
-//   }else{
-//     $(this).addClass('is-invalid');
-//     $(this).removeClass('is-valid');
-//   }
-// });
-
-
-
 });
   </script>
 </html>

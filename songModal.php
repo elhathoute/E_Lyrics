@@ -20,6 +20,14 @@ class Song{
         return $stm->fetchAll();
     
     }
+    static public function getCountSong(){
+        $stm = DB::connex()->prepare("select count(id)  from songs");
+        $stm->execute();
+
+       $result=$stm->fetchColumn();
+        return $result;
+    
+    }
     
  
 

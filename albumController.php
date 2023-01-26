@@ -9,5 +9,11 @@ class AlbumController{
 
         return $albums;
     }
+    public function CountAlbum()
+    {
+        $countAlbum = Album::getCountAlbum();
+        return $countAlbum;
+    }
+
 }
 ?>

@@ -9,5 +9,10 @@ class TypeController{
 
         return $types;
     }
+    public function CountType()
+    {
+        $countType = Type::getCountType();
+        return $countType;
+    }
 }
 ?>

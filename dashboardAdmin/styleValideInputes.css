@@ -1,0 +1,15 @@
+
+input:invalid {
+border: 2px dashed red;
+}
+
+input:invalid:required {
+background-color: orange;
+color:white;
+}
+
+input:valid {
+border: 3px solid green;
+border-radius:3px;
+}
+

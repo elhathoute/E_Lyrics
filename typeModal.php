@@ -11,6 +11,14 @@ class Type{
         return $stm->fetchAll();
     
     }
+    static public function getCountType(){
+        $stm = DB::connex()->prepare("select count(id)  from types");
+        $stm->execute();
+
+       $result=$stm->fetchColumn();
+        return $result;
+    
+    }
 }
 
     ?>

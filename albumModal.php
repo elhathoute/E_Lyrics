@@ -11,6 +11,14 @@ class Album{
         return $stm->fetchAll();
     
     }
+    static public function getCountAlbum(){
+        $stm = DB::connex()->prepare("select count(id)  from albums");
+        $stm->execute();
+
+       $result=$stm->fetchColumn();
+        return $result;
+    
+    }
 }
 
     ?>

@@ -9,5 +9,11 @@ class ArtistController{
 
         return $artists;
     }
+
+    public function CountArtist()
+    {
+        $countArtist = Artist::getCountArtist();
+        return $countArtist;
+    }
 }
 ?>
